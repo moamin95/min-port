@@ -64,7 +64,14 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground text-base;
+    background-color: rgb(255, 255, 255);
+    color: rgb(17, 19, 22);
+  }
+
+  .dark body {
+    background-color: rgb(17, 19, 22);
+    color: rgb(245, 245, 245);
   }
 
   .font-mono {
@@ -77,10 +84,145 @@
   h4,
   h5,
   h6 {
-    font-family: var(--font-merriweather);
+    font-family: var(--font-inter);
   }
 }
 
 html {
   scroll-behavior: smooth;
+}
+
+/* Custom utility classes */
+.text-muted {
+  @apply text-black dark:text-white text-base;
+}
+
+.heading-primary {
+  @apply text-3xl md:text-4xl tracking-tighter font-bold text-left;
+  line-height: 1.1;
+}
+
+.heading-secondary {
+  @apply text-lg md:text-xl font-medium text-neutral-900 dark:text-neutral-50;
+}
+
+.typewriter-text {
+  @apply text-xl md:text-2xl font-mono uppercase;
+}
+
+.section-container {
+  @apply py-20 max-w-4xl mx-auto px-4 sm:px-6 md:px-10;
+}
+
+.first-section-container {
+  @apply pb-20 pt-32 max-w-4xl mx-auto px-4 sm:px-6 md:px-10;
+}
+
+.content-grid {
+  @apply grid grid-cols-1 md:grid-cols-3 gap-6;
+}
+
+.content-section {
+  @apply text-left space-y-4;
+}
+
+.content-area {
+  @apply flex flex-col md:col-span-2 gap-2;
+}
+
+.date-text {
+  @apply text-sm md:text-base text-muted font-mono;
+}
+
+.nav-link {
+  @apply text-sm hover:text-neutral-600 dark:hover:text-neutral-400 transition-colors uppercase flex items-center relative;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: currentColor;
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* Enhanced smooth scrolling */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Active navigation indicator */
+  .nav-link {
+    position: relative;
+    transition: color 0.3s ease;
+  }
+
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background-color: rgb(17, 19, 22); /* dark underline for light mode */
+    transition: width 0.3s ease;
+  }
+
+  .dark .nav-link::after {
+    background-color: #fff; /* white underline for dark mode */
+  }
+
+  .nav-link.active::after,
+  .nav-link:hover::after {
+    width: 100%;
+  }
+
+  /* Fast blinking cursor animation */
+  .cursor-blink {
+    display: inline-block;
+    width: 0.2em;
+    font-weight: 900;
+    animation: fastBlink 0.8s infinite;
+  }
+
+  @keyframes fastBlink {
+    0%,
+    50% {
+      opacity: 1;
+    }
+    51%,
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes floatVertical {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-8px);
+    }
+  }
+
+  @keyframes fadeOut {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+
+  .fade-out {
+    animation: fadeOut 0.3s ease-out forwards;
+  }
 }
