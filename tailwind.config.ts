@@ -20,9 +20,9 @@ const config: Config = {
     },
     extend: {
       fontFamily: {
-        sans: ["var(--font-geist-sans)"], // Changed to Geist Sans
+        sans: ["var(--font-inter)"],
+        inter: ["var(--font-inter)"],
         mono: ["var(--font-jetbrains-mono)"],
-        display: ["var(--font-merriweather)"],
       },
       colors: {
         border: "hsl(var(--border))",

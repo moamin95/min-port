@@ -1,0 +1,9 @@
+echo "🚀 Running pre-push checks..."
+
+echo "🏗️  Running build..."
+if ! pnpm build; then
+  echo "❌ Build failed. Please fix the errors and try again."
+  exit 1
+fi
+
+echo "✅ Build successful! Ready to push!"
