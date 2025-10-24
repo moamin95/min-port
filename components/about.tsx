@@ -35,7 +35,7 @@ export default function About({ showBackground = true }: AboutProps) {
                   <Typewriter
                     words={[
                       "Tech Enthusiast",
-                      "Amateur Cinephile",
+                      "Amateur Photographer",
                       "Software Engineer",
                     ]}
                     className="w-full"
@@ -43,8 +43,8 @@ export default function About({ showBackground = true }: AboutProps) {
                 </h3>
               </div>
               <p className="max-w-xl text-muted">
-                I build robust and scalable web applications. Let&apos;s connect and
-                create something.
+                I build robust and scalable web solutions. Let&apos;s connect and
+                create something 🚀
               </p>
               {/* Social Links */}
               <div className="flex items-center justify-start space-x-6 w-full pointer-events-auto">
@@ -64,6 +64,15 @@ export default function About({ showBackground = true }: AboutProps) {
                   className="text-sm hover:text-neutral-600 dark:hover:text-neutral-400 transition-colors uppercase nav-link flex items-center"
                 >
                   GitHub
+                  <ExternalLink className="w-3 h-3 ml-1" />
+                </a>
+                <a
+                  href="https://www.youtube.com/@moamin.create"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm hover:text-neutral-600 dark:hover:text-neutral-400 transition-colors uppercase nav-link flex items-center"
+                >
+                  Youtube
                   <ExternalLink className="w-3 h-3 ml-1" />
                 </a>
               </div>

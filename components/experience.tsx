@@ -6,7 +6,7 @@ const jobs = [
     company: "American Express",
     position: "Software Engineer II",
     blurb: "Revamped the American Express customer banking experience to improve user engagement and retention.",
-    techstack: ["React", "TypeScript", "Node.js", "Redux"]
+    techstack: ["React", "TypeScript", "Node.js", "TanStack"]
   },
   {
     dates: "May 2022 - Oct 2024",
