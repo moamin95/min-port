@@ -5,11 +5,12 @@ import Separator from "@/components/separator";
 import Footer from "@/components/footer";
 import Navigation from "@/components/navigation";
 import Blurb from "@/components/blurb";
+import Port from "@/components/port";
 
 export default function Portfolio() {
   return (
     <div className="text-neutral-900 dark:text-neutral-50">
-      <Navigation />
+      {/* <Navigation />
       <About showBackground={true} />
       <Separator />
       <Blurb />
@@ -17,7 +18,8 @@ export default function Portfolio() {
       <Experience />
       <Separator />
       <Contact />
-      <Footer />
+      <Footer /> */}
+      <Port/>
     </div>
   );
 }

@@ -16,9 +16,8 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "Mo Amin - Full-stack Developer",
+  title: "Mo Amin - Developer",
   description: "Portfolio of Mo Amin, a full-stack developer specializing in modern web applications",
-    generator: 'v0.dev'
 }
 
 export default function RootLayout({
@@ -28,7 +27,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`} suppressHydrationWarning>
-      <body className={inter.className}>
+      <body className={inter.className} suppressHydrationWarning>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"

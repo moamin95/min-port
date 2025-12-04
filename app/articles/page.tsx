@@ -10,7 +10,9 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 
-const articles = getAllArticles();
+// const articles = getAllArticles();
+const articles = []
+
 
 export default function Articles() {
   return (

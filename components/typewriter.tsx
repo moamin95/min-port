@@ -34,7 +34,7 @@ export default function Typewriter({ words, className = "" }: TypewriterProps) {
       }
       timeout = setTimeout(() => {
         setIsDeleting(true);
-      }, 1200);
+      }, 800);
     } else if (isDeleting && currentText !== "") {
       // Deleting backward
       timeout = setTimeout(() => {
