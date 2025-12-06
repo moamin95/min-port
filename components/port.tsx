@@ -114,18 +114,46 @@ const Port: React.FC = () => {
         </button>
     );
 
-    return (
-        <div className="min-h-screen bg-white dark:bg-[#050505] text-neutral-800 dark:text-neutral-200 selection:bg-gray-300 dark:selection:bg-gray-700 selection:text-gray-900 dark:selection:text-gray-100 font-sans transition-colors" suppressHydrationWarning>
 
+    const GlassCard = ({ description, tech, idx }: { description: string, tech: string[], idx: number }) => {
+        return (
+            <div className={`float-anim relative w-full min-w-[300px] md:min-w-[400px] lg:min-w-[500px] mb-4 ${idx % 2 !== 0 ? 'md:-mr-16' : 'md:-ml-16'}`}>
+                {/* Glass Container */}
+                <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-2xl backdrop-blur-xl">
+                    {/* Subtle white gradient overlay for 'sheen' */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent pointer-events-none"></div>
+
+                    <div className="relative p-4 md:p-8 flex flex-col gap-5">
+                        <p className="text-slate-300 leading-relaxed font-light">
+                            {description}
+                        </p>
+                        {/* <ul className={`flex flex-wrap gap-4 font-mono text-xs text-neutral-600 dark:text-neutral-400 mb-8`}>
+                            {tech.map((t: string) => <li key={t}>{t}</li>)}
+                        </ul> */}
+                    </div>
+                </div>
+
+                {/* Reflection effect (bottom) */}
+                <div className="absolute -bottom-4 left-4 right-4 h-4 bg-black/40 blur-lg rounded-[100%]"></div>
+            </div>
+        );
+    };
+
+    return (
+        <div className="min-h-screen bg-gradient-to-br from-[#080c18] via-[#0f1729] to-[#080c18] text-neutral-800 dark:text-neutral-200 selection:bg-gray-300 dark:selection:bg-gray-700 selection:text-gray-900 dark:selection:text-gray-100 font-sans transition-colors" suppressHydrationWarning>
             {/* Background Ambient Glow */}
             <div className="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
                 <div className="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] bg-gray-300/20 dark:bg-gray-800/10 rounded-full blur-[120px]" />
                 <div className="absolute bottom-[-10%] left-[-5%] w-[600px] h-[600px] bg-gray-200/10 dark:bg-gray-900/5 rounded-full blur-[120px]" />
             </div>
 
+            {/* Glowing Orbs */}
+            <div className="fixed top-1/4 left-1/4 w-72 h-72 bg-blue-500/30 rounded-full blur-[100px] animate-pulse"></div>
+            <div className="fixed bottom-1/4 right-1/4 w-96 h-96 bg-green-500/20 rounded-full blur-[100px]"></div>
+
             {/* Navigation */}
             <nav
-                className={`fixed top-0 w-full z-50 transition-all duration-500 ${isScrolled ? 'bg-white/80 dark:bg-[#050505]/80 backdrop-blur-md py-4 border-b border-neutral-200 dark:border-white/5' : 'py-8 bg-transparent'
+                className={`fixed top-0 w-full z-50 transition-all duration-500 ${isScrolled ? 'bg-white/80 dark:bg-[#0f1729]/90 backdrop-blur-md py-4 border-b border-neutral-200 dark:border-white/5' : 'py-8 bg-transparent'
                     }`}
             >
                 <div className="max-w-6xl mx-auto px-6 flex justify-between items-center">
@@ -142,7 +170,7 @@ const Port: React.FC = () => {
                         <NavLink to="experience" label="Experience" number="02" />
                         <NavLink to="projects" label="Projects" number="03" />
                         <NavLink to="contact" label="Contact" number="04" />
-                        <button
+                        {/* <button
                             onClick={() => mounted && setTheme(theme === 'dark' ? 'light' : 'dark')}
                             className="ml-2 p-2 rounded-lg hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors"
                             aria-label="Toggle theme"
@@ -155,12 +183,12 @@ const Port: React.FC = () => {
                             ) : (
                                 <Moon size={20} className="text-gray-700" />
                             )}
-                        </button>
+                        </button> */}
                     </div>
 
                     {/* Mobile Menu Toggle */}
                     <div className="md:hidden flex items-center gap-2 z-50">
-                        <button
+                        {/* <button
                             onClick={() => mounted && setTheme(theme === 'dark' ? 'light' : 'dark')}
                             className="p-2 rounded-lg hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors focus:outline-none"
                             aria-label="Toggle theme"
@@ -173,7 +201,7 @@ const Port: React.FC = () => {
                             ) : (
                                 <Moon size={20} className="text-gray-700" />
                             )}
-                        </button>
+                        </button> */}
                         <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
                             <SheetTrigger asChild>
                                 <button
@@ -183,16 +211,19 @@ const Port: React.FC = () => {
                                     <Menu size={24} />
                                 </button>
                             </SheetTrigger>
-                            <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+                            <SheetContent
+                                side="right"
+                                className="w-full bg-gradient-to-b from-[#0A0909] via-[#09101F] to-[#09101F]"
+                            >
                                 <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
                                 <nav className="flex flex-col items-center justify-center space-y-8 h-full">
                                     {['About', 'Experience', 'Projects', 'Contact'].map((item: string) => (
                                         <button
                                             key={item}
                                             onClick={() => scrollToSection(item.toLowerCase())}
-                                            className="text-3xl font-bold tracking-tight text-neutral-800 dark:text-neutral-200 hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
+                                            className="text-xl font-extralight font-mono tracking-tight text-white hover:text-gray-300 transition-colors"
                                         >
-                                            {item}
+                                            {item.toLowerCase()}
                                         </button>
                                     ))}
                                 </nav>
@@ -203,7 +234,10 @@ const Port: React.FC = () => {
             </nav>
 
             {/* Hero Section - Full Width */}
-            <section id="home" className="min-h-screen flex flex-col justify-center pt-20 relative">
+            <section
+                id="home"
+                className="min-h-screen flex flex-col justify-center pt-20 relative"
+            >
                 {/* Geometric Background */}
                 <div className="absolute inset-0 pointer-events-none">
                     <GeometricBackground opacity="opacity-30 dark:opacity-25" />
@@ -226,9 +260,10 @@ const Port: React.FC = () => {
                                 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter bg-gradient-to-r from-neutral-800 via-neutral-900 to-neutral-800 dark:from-neutral-400 dark:via-neutral-500 dark:to-neutral-400 bg-clip-text"
                             />
                         </h1>
+
                         <p className="max-w-xl text-neutral-600 dark:text-neutral-400 text-lg md:text-xl leading-relaxed pt-4">
                             I'm a software engineer specializing in building robust and scalable web solutions.
-                            This year, I'm focused on expanding my portfolio with accessible, human-centered products.
+                            {/* This year, I'm focused on expanding my portfolio with accessible, human-centered products. */}
                         </p>
                         <div className="pt-8">
                             <button
@@ -245,11 +280,15 @@ const Port: React.FC = () => {
 
             <main className="max-w-6xl mx-auto px-6">
                 {/* About Section */}
-                <section id="about" className="py-24 md:py-32">
+                <section id="about" className="py-24 md:py-32 relative">
+                    <div className="absolute inset-0 pointer-events-none blur-sm">
+                        <GeometricBackground opacity="opacity-10 dark:opacity-5" />
+                    </div>
+                    <div className="relative z-10">
                     <div className="flex items-center gap-4 mb-12">
                         <span className="text-gray-700 dark:text-gray-300 text-xl font-semibold">01.</span>
                         <h2 className="text-3xl font-bold text-neutral-900 dark:text-white tracking-tight">About Me</h2>
-                        <div className="h-[1px] bg-neutral-300 dark:bg-neutral-800 flex-grow max-w-xs ml-4"></div>
+                        <div className="h-[1px] bg-neutral-300 dark:bg-neutral-600 flex-grow max-w-xs ml-4"></div>
                     </div>
 
                     <div className="grid md:grid-cols-3 gap-12">
@@ -258,14 +297,14 @@ const Port: React.FC = () => {
                                 With over <span className="font-bold">5 years</span>{" "}of experience spanning agile startups and large enterprises, I’ve worked on everything from complex distributed microservices to monolithic SPAs. This diverse background has given me a versatile skill set that adapts to any environment.
                             </p>
 
-                            <p className='text-neutral-900 dark:text-white'>Currently, I'm a <span className="font-bold">Frontend Dev</span> at American Express, migrating legacy applications to a modern Node JS framework.</p>
+                            <p className='text-neutral-900 dark:text-white'>Currently, I'm a <span className="font-bold">Frontend Dev</span> at American Express, migrating legacy applications to a modern Node JS architecture.</p>
                             <p>
                                 I also consider myself a creative person, so I channel that energy into photography, content creation, and code.
                             </p>
 
-                            <p>Check out my <Link className="text-black dark:text-white font-bold underline" href="https://www.youtube.com/@moamin.create" target="_blank">youtube channel</Link>!</p>
+                            <p>Check out my <Link className="text-black dark:text-white font-bold hover:underline" href="https://www.youtube.com/@moamin.create" target="_blank">youtube channel</Link>!</p>
 
-                            <p>
+                            {/* <p>
                                 Here are a few technologies I've been working with recently:
                             </p>
                             <ul className="grid grid-cols-2 gap-2 text-md pt-2 text-bold">
@@ -274,7 +313,7 @@ const Port: React.FC = () => {
                                         <span className="text-gray-700 dark:text-gray-300">▹</span> {tech}
                                     </li>
                                 ))}
-                            </ul>
+                            </ul> */}
                         </div>
                         <div className="relative group">
                             <div className="relative z-10 w-full aspect-square rounded transition-all duration-300 overflow-hidden">
@@ -289,20 +328,25 @@ const Port: React.FC = () => {
                             <div className="absolute top-4 left-4 w-full aspect-square border-2 border-gray-700/50 dark:border-gray-300/50 rounded -z-0 transition-transform duration-300 group-hover:translate-x-1 group-hover:translate-y-1"></div>
                         </div>
                     </div>
+                    </div>
                 </section>
 
                 {/* Experience Section */}
-                <section id="experience" className="py-24 md:py-32">
+                <section id="experience" className="py-24 md:py-32 relative">
+                    <div className="absolute inset-0 pointer-events-none blur-sm">
+                        <GeometricBackground opacity="opacity-10 dark:opacity-5" />
+                    </div>
+                    <div className="relative z-10">
                     <div className="flex items-center gap-4 mb-12">
                         <span className="text-gray-700 dark:text-gray-300 text-xl font-semibold">02.</span>
                         <h2 className="text-3xl font-bold text-neutral-900 dark:text-white tracking-tight">Where I've Worked</h2>
-                        <div className="h-[1px] bg-neutral-300 dark:bg-neutral-800 flex-grow max-w-xs ml-4"></div>
+                        <div className="h-[1px] bg-neutral-300 dark:bg-neutral-600 flex-grow max-w-xs ml-4"></div>
                     </div>
 
-                    <div className="space-y-12 border-l border-neutral-300 dark:border-neutral-800 ml-3 md:ml-0">
+                    <div className="space-y-12 border-l border-neutral-300 dark:border-neutral-600 ml-3 md:ml-0">
                         {jobs.map((job: Job, idx: number) => (
                             <div key={idx} className="relative pl-8 md:pl-12 group">
-                                <div className="absolute -left-[5px] top-2 w-[9px] h-[9px] rounded-full bg-neutral-300 dark:bg-neutral-800 group-hover:bg-gray-700 dark:group-hover:bg-gray-300 transition-colors border border-white dark:border-black"></div>
+                                <div className="absolute -left-[5px] top-2 w-[9px] h-[9px] rounded-full bg-neutral-300 dark:bg-neutral-600 group-hover:bg-gray-700 dark:group-hover:bg-gray-300 transition-colors border border-white dark:border-black"></div>
 
                                 <h3 className="text-xl text-neutral-900 dark:text-white font-medium">
                                     {job.title} <span className="text-gray-700 dark:text-gray-300">@ {job.company}</span>
@@ -375,14 +419,19 @@ const Port: React.FC = () => {
                             </div>
                         ))}
                     </div>
+                    </div>
                 </section>
 
                 {/* Projects Section */}
-                <section id="projects" className="py-24 md:py-32">
+                <section id="projects" className="py-24 md:py-32 relative">
+                    <div className="absolute inset-0 pointer-events-none blur-sm">
+                        <GeometricBackground opacity="opacity-10 dark:opacity-5" />
+                    </div>
+                    <div className="relative z-10">
                     <div className="flex items-center gap-4 mb-12">
                         <span className="text-gray-700 dark:text-gray-300 text-xl font-semibold">03.</span>
                         <h2 className="text-3xl font-bold text-neutral-900 dark:text-white tracking-tight">Some Things I've Built</h2>
-                        <div className="h-[1px] bg-neutral-300 dark:bg-neutral-800 flex-grow max-w-xs ml-4"></div>
+                        <div className="h-[1px] bg-neutral-300 dark:bg-neutral-600 flex-grow max-w-xs ml-4"></div>
                     </div>
 
                     <div className="grid gap-24">
@@ -432,13 +481,16 @@ const Port: React.FC = () => {
                                     <span className="text-gray-700 dark:text-gray-300 text-xs mb-2 font-medium">Featured Project</span>
                                     <h3 className="text-2xl font-bold text-neutral-900 dark:text-white mb-4 hover:text-gray-700 dark:hover:text-gray-300 cursor-pointer transition-colors">{project.title}</h3>
 
-                                    <div className={`bg-[#e8f4f8] dark:bg-[#112240] p-6 rounded text-sm text-neutral-700 dark:text-neutral-300 shadow-xl mb-4 min-w-[300px] ${idx % 2 !== 0 ? 'md:-mr-16 text-left' : 'md:-ml-16 md:text-right'}`}>
+                                    {/* <div className={`bg-[#e8f4f8] dark:bg-[#112240] p-6 rounded text-sm text-neutral-700 dark:text-neutral-300 shadow-xl mb-4 min-w-[300px] ${idx % 2 !== 0 ? 'md:-mr-16 text-left' : 'md:-ml-16 md:text-right'}`}>
                                         {project.desc}
-                                    </div>
+                                    </div> */}
 
-                                    <ul className={`flex flex-wrap gap-4 font-mono text-xs text-neutral-600 dark:text-neutral-400 mb-8 ${idx % 2 !== 0 ? 'justify-start' : 'justify-end'}`}>
+                                    <GlassCard description={project.desc} tech={project.tech} idx={idx} />
+
+                                    <ul className={`flex flex-wrap gap-4 font-mono text-xs text-neutral-600 dark:text-neutral-400 mb-8`}>
                                         {project.tech.map((t: string) => <li key={t}>{t}</li>)}
                                     </ul>
+
 
                                     <div className="flex gap-4 text-neutral-700 dark:text-white">
                                         <Link target="_blank" href={project.githubLink}><Github className="w-5 h-5 hover:text-gray-700 dark:hover:text-gray-300 cursor-pointer transition-colors" /></Link>
@@ -475,10 +527,15 @@ const Port: React.FC = () => {
                             ))}
                         </div>
                     </div> */}
+                    </div>
                 </section>
 
                 {/* Contact Section */}
-                <section id="contact" className="py-24 md:py-48 text-center max-w-2xl mx-auto">
+                <section id="contact" className="py-24 md:py-48 text-center max-w-2xl mx-auto relative">
+                    <div className="absolute inset-0 pointer-events-none blur-sm">
+                        <GeometricBackground opacity="opacity-10 dark:opacity-5" />
+                    </div>
+                    <div className="relative z-10">
                     <span className="text-gray-700 dark:text-gray-300 text-sm mb-4 block font-medium">04. What's Next?</span>
                     <h2 className="text-4xl md:text-5xl font-bold text-neutral-900 dark:text-white mb-6">Get In Touch</h2>
                     <p className="text-neutral-600 dark:text-neutral-400 text-lg mb-12">
@@ -491,6 +548,7 @@ const Port: React.FC = () => {
                     >
                         SAY HELLO
                     </a>
+                    </div>
                 </section>
             </main>
 
@@ -540,7 +598,7 @@ const jobs: Job[] = [
             'Optimizing front end architecture to improve Core Web Vitals, most notably reducing LCP by 1 second.',
             'Enhancing UX for 36 million monthly active users, spreading across all domestic and international markets',
         ],
-        tech: ["Node JS", "React", "TanStack", "TypeScript"]
+        tech: ["Node JS", "React", "TanStack", "GHA"]
     },
     {
         title: 'Software Engineer',
@@ -551,7 +609,7 @@ const jobs: Job[] = [
             'Collaborated with B2B partners to integrate secure payment forms, improving payment processing by 25%.',
             'Spearheaded WCAG compliance initiative to reduce 90% of A11y defects across all payments modules.'
         ],
-        tech: ["Next JS", "Angular", "GraphQL", "Stencil JS"]
+        tech: ["Next JS", "Angular", "GraphQL", "Jenkins"]
     },
     {
         title: 'Web Engineer',
@@ -579,7 +637,7 @@ const projects: Project[] = [
     },
     {
         title: 'Coming Soon...',
-        desc: 'Building a media page for my photography and videography portfolio. Tinkering with lazy loading soultions and potentially CDN delivery.',
+        desc: 'Building a media page for my photography and videography portfolio. Tinkering with lazy loading.',
         tech: ['React', 'Styled Components', 'Express', 'Heroku'],
         icon: Code2,
         githubLink: "",

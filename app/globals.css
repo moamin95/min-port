@@ -241,4 +241,14 @@ html {
   .animate-gradient {
     animation: gradient 8s ease infinite;
   }
+
+  .float-anim {
+    animation: floatVertical 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+  }
 }

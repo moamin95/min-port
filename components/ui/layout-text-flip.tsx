@@ -39,20 +39,23 @@ export const LayoutTextFlip = ({
     <motion.span
       layout
       className={cn("relative w-fit overflow-hidden", className)}
+      style={{ perspective: "1000px" }}
     >
       <AnimatePresence mode="popLayout">
         <motion.span
           key={currentIndex}
-          initial={{ y: -40, filter: "blur(5px)" }}
+          initial={{ rotateX: 90, opacity: 0 }}
           animate={{
-            y: 0,
-            filter: "blur(0px)",
+            rotateX: 0,
+            opacity: 1,
           }}
-          exit={{ y: 50, filter: "blur(5px)", opacity: 0 }}
+          exit={{ rotateX: -90, opacity: 0 }}
           transition={{
-            duration: 0.5,
+            duration: 0.3,
+            ease: "easeInOut",
           }}
           className={cn("inline-block whitespace-nowrap")}
+          style={{ transformOrigin: "center" }}
         >
           {words[currentIndex]}
         </motion.span>
