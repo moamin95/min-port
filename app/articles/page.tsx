@@ -11,7 +11,13 @@ import {
 } from "@/components/ui/breadcrumb";
 
 // const articles = getAllArticles();
-const articles = []
+const articles: Array<{
+  id: string;
+  date: string;
+  title: string;
+  summary: string;
+  slug: string;
+}> = []
 
 
 export default function Articles() {

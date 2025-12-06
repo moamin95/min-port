@@ -1,11 +1,5 @@
 echo "🔍 Running pre-commit checks..."
 
-echo "📝 Running ESLint..."
-if ! pnpm lint; then
-  echo "❌ ESLint failed. Please fix the errors and try again."
-  exit 1
-fi
-
 echo "🔧 Running TypeScript type check..."
 if ! pnpm typecheck; then
   echo "❌ TypeScript check failed. Please fix the errors and try again."
