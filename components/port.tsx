@@ -428,7 +428,7 @@ const Port: React.FC = () => {
                     {/* Mobile: Show first duty always, rest collapsible */}
                     <li className="flex md:hidden items-start gap-3 text-neutral-400 text-sm leading-relaxed">
                       <span className="text-gray-300 mt-1.5 text-xs">
-                        ▹
+                        -
                       </span>
                       {job.duties[0]}
                     </li>

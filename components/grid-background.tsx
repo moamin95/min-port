@@ -28,8 +28,8 @@ export default function AnimatedGridBackground({ className }: AnimatedGridBackgr
             // We use a mask to fade the grid out at the edges for a subtle look
             maskImage: "radial-gradient(ellipse at center, black 40%, transparent 100%)",
             WebkitMaskImage: "radial-gradient(ellipse at center, black 40%, transparent 100%)",
-            // Blue theme grid
-            backgroundImage: `linear-gradient(to right, #3b82f6 1px, transparent 1px), linear-gradient(to bottom, #3b82f6 1px, transparent 1px)`,
+            // Grey theme grid
+            backgroundImage: `linear-gradient(to right, #64748b 1px, transparent 1px), linear-gradient(to bottom, #64748b 1px, transparent 1px)`,
           }}
         />
       </div>
