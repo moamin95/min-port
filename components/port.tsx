@@ -154,7 +154,7 @@ const Port: React.FC = () => {
       <span className="text-xs text-gray-300/50 opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100">
         {number}
       </span>
-      <span className="text-sm font-mono font-thin tracking-tighter">{label}</span>
+      <span className="text-sm font-mono font-extralight tracking-tighter">{label}</span>
     </button>
   );
 
@@ -285,13 +285,13 @@ const Port: React.FC = () => {
                   PORTFOLIO / 2025 
                 </span>
                 <div className="flex flex-col py-2 lg:py-8">
-                  <span className="font-playfair font-thin tracking-tighter text-5xl md:text-8xl text-white">MO AMIN</span>
-                  <span className="text-2xl md:text-4xl font-thin text-gray-400">
+                  <span className="font-playfair font-extralight tracking-tighter text-5xl md:text-8xl text-white">MO AMIN</span>
+                  <span className="text-2xl md:text-4xl font-extralight text-gray-400">
                     FRONTEND ENGINEER
                   </span>
                 </div>
               </div>
-              <p className="max-w-xl font-thin tracking-normal text-neutral-400 text-lg md:text-xl lg:text-2xl leading-relaxed pt-4">
+              <p className="max-w-xl font-extralight tracking-normal text-neutral-400 text-lg md:text-xl lg:text-2xl leading-relaxed pt-4">
                 I'm a software engineer specializing in building <span className="text-foreground">robust</span> and{" "}
                 <span className="text-foreground">scalable</span> web pages. I also dabble in photography.
                 {/* This year, I'm focused on expanding my portfolio with accessible, human-centered products. */}
@@ -332,7 +332,7 @@ const Port: React.FC = () => {
 
             <div className="flex flex-col gap-12">
               {/* Text Content - Top */}
-              <div className="space-y-6 font-thin tracking-normal text-neutral-400 text-lg md:text-xl lg:text-2xl leading-relaxed">
+              <div className="space-y-6 font-extralight tracking-normal text-neutral-400 text-lg md:text-xl lg:text-2xl leading-relaxed">
                 <p>
                   With over <span className="text-foreground">5 years</span> of
                   experience, I've
@@ -391,7 +391,7 @@ const Port: React.FC = () => {
                     {[...technologies, ...technologies].map((tech, idx) => (
                       <span
                         key={idx}
-                        className={`text-2xl md:text-3xl font-thin ${
+                        className={`text-2xl md:text-3xl font-extralight ${
                           idx % 2 === 0 ? "text-white" : "text-gray-400"
                         }`}
                       >
@@ -425,10 +425,10 @@ const Port: React.FC = () => {
                   </div>
                   <div className="lg:col-span-6 space-y-3">
                     <div className="leading-6">
-                      <h3 className="text-2xl md:text-3xl font-thin text-foreground">{job.title}</h3>
+                      <h3 className="text-2xl md:text-3xl font-extralight text-foreground">{job.title}</h3>
                       <div className="font-light font-lato text-lg md:text-xl text-muted-foreground">{job.company}</div>
                     </div>
-                    <p className="text-muted-foreground text-lato font-thin tracking-normal leading-relaxed text-lg md:text-xl lg:text-2xl lg:max-w-xl">
+                    <p className="text-muted-foreground text-lato font-extralight tracking-normal leading-relaxed text-lg md:text-xl lg:text-2xl lg:max-w-xl">
                       {job.duties[0]}
                     </p>
                   </div>
@@ -459,7 +459,7 @@ const Port: React.FC = () => {
             </div>
 
             <div className="mb-12">
-              <p className="text-neutral-400 text-lg md:text-xl lg:text-2xl font-thin tracking-normal text-neutral-400">
+              <p className="text-neutral-400 text-lg md:text-xl lg:text-2xl font-extralight tracking-normal text-neutral-400">
                 Capturing moments through my lens — a collection of architecture, nature, and portraits
               </p>
             </div>
@@ -547,7 +547,7 @@ const Port: React.FC = () => {
               </div>
             </div>
 
-            <div className="space-y-6 font-thin tracking-normal text-neutral-400 text-lg md:text-xl lg:text-2xl leading-relaxed">
+            <div className="space-y-6 font-extralight tracking-normal text-neutral-400 text-lg md:text-xl lg:text-2xl leading-relaxed">
               <p>
                 I'm currently looking for new opportunities and my inbox is
                 always open. Whether you have a question or just want to say hi,
@@ -558,7 +558,7 @@ const Port: React.FC = () => {
                 <Link
                   href="mailto:mohamin.nyc@gmail.com"
                   target="_blank"
-                  className="text-md md:text-lg font-mono font-extralight text-white hover:underline transition-all"
+                  className="text-md md:text-lg font-mono text-white hover:underline transition-all"
                 >
                   Email
                 </Link>
