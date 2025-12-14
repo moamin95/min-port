@@ -8,7 +8,6 @@ import {
   Github,
   Linkedin,
   Mail,
-  Menu,
   ExternalLink,
   Code2,
   LucideIcon,
@@ -17,12 +16,6 @@ import {
   Sun,
 } from "lucide-react";
 import AnimatedGridBackground from "./grid-background";
-import {
-  Sheet,
-  SheetContent,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
 import { LayoutTextFlip } from "./ui/layout-text-flip";
 import { motion, AnimatePresence } from "motion/react";
 
@@ -50,7 +43,6 @@ type Section = "home" | "about" | "experience" | "photography" | "projects" | "c
 
 const Port: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
   const [activeSection, setActiveSection] = useState<Section>("home");
   const [mounted, setMounted] = useState<boolean>(false);
   const [expandedJobs, setExpandedJobs] = useState<Set<number>>(new Set());
@@ -120,22 +112,7 @@ const Port: React.FC = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Ensure body overflow is restored when mobile menu closes
-  useEffect(() => {
-    if (!mobileMenuOpen) {
-      // Force remove overflow hidden from body when menu closes
-      // This ensures Radix Dialog's cleanup completes properly
-      const timeoutId = setTimeout(() => {
-        document.body.style.overflow = "";
-        document.body.style.paddingRight = "";
-      }, 350); // Slightly longer than Sheet close animation (300ms)
-
-      return () => clearTimeout(timeoutId);
-    }
-  }, [mobileMenuOpen]);
-
   const scrollToSection = (id: string): void => {
-    setMobileMenuOpen(false);
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
@@ -211,53 +188,6 @@ const Port: React.FC = () => {
               )}
             </button>
           </div> */}
-
-          {/* Mobile Menu Toggle - Shows up to 1024px */}
-          <div className="lg:hidden flex items-center gap-2 z-50">
-            {/* <button
-              onClick={() => mounted && setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className="p-2 rounded-lg hover:bg-white/10 transition-colors focus:outline-none"
-              aria-label="Toggle theme"
-              suppressHydrationWarning
-            >
-              {!mounted ? (
-                <div className="w-5 h-5" />
-              ) : theme === 'dark' ? (
-                <Sun size={20} className="text-gray-300" />
-              ) : (
-                <Moon size={20} className="text-gray-700" />
-              )}
-            </button> */}
-            <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-              <SheetTrigger asChild>
-                <button
-                  className="text-white focus:outline-none"
-                  aria-label="Open menu"
-                >
-                  <Menu size={24} />
-                </button>
-              </SheetTrigger>
-              <SheetContent
-                side="right"
-                className="w-full bg-black/80 backdrop-blur-xl"
-              >
-                <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
-                <nav className="flex flex-col items-center justify-center space-y-8 h-full">
-                  {["About", "Experience", "Photography", "Contact"].map(
-                    (item: string) => (
-                      <button
-                        key={item}
-                        onClick={() => scrollToSection(item.toLowerCase())}
-                        className="text-xl font-extralight font-mono tracking-tight text-white hover:text-gray-300 transition-colors"
-                      >
-                        {item.toLowerCase()}
-                      </button>
-                    )
-                  )}
-                </nav>
-              </SheetContent>
-            </Sheet>
-          </div>
         </div>
       </nav>
 
@@ -274,7 +204,7 @@ const Port: React.FC = () => {
       {/* Hero Section - Full Width */}
       <section
         id="home"
-        className="min-h-screen flex flex-col justify-center pt-20 sm:pt-32 md:pt-20 relative"
+        className="min-h-screen flex flex-col justify-center pt-24 sm:pt-32 md:pt-20 relative"
       >
         <div className="max-w-6xl mx-auto px-6 w-full">
           <div className="grid lg:grid-cols-2 gap-12 items-center relative z-10">
@@ -587,23 +517,6 @@ const Port: React.FC = () => {
 
       {/* Footer */}
       <footer className="text-center py-8 text-neutral-500 text-xs hover:text-gray-300 transition-colors cursor-default">
-        <div className="flex justify-center gap-6 xl:hidden mb-4 text-neutral-400">
-          <Link target="_blank" href="https://github.com/moamin95">
-            <Github size={20} />
-          </Link>
-          <Link
-            target="_blank"
-            href="https://www.linkedin.com/in/mohammed-amin-13a179215/"
-          >
-            <Linkedin size={20} />
-          </Link>
-          <Link target="_blank" href="mailto:mohamin.nyc@gmail.com">
-            <Mail size={20} />
-          </Link>
-          <Link target="_blank" href="https://www.youtube.com/@moamin.create">
-            <Youtube size={20} />
-          </Link>
-        </div>
         <p className="pb-20">Designed & Built by Mo Amin</p>
       </footer>
 
