@@ -23,6 +23,8 @@ const config: Config = {
         sans: ["var(--font-inter)"],
         inter: ["var(--font-inter)"],
         mono: ["var(--font-jetbrains-mono)"],
+        playfair: ["var(--font-playfair-display)"],
+        lato: ["var(--font-lato)"],
       },
       colors: {
         border: "hsl(var(--border))",

@@ -4,25 +4,25 @@
 
 @layer base {
   :root {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
+    --background: 0 0% 100%;
+    --foreground: 0 0% 9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 9%;
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
+    --accent: 0 0% 96%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 0 0% 20%;
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
@@ -63,18 +63,22 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground text-base;
-    background-color: rgb(255, 255, 255);
+    @apply text-foreground text-base;
+    background: linear-gradient(to bottom right, rgb(255, 255, 255), rgb(219, 234, 254), rgb(255, 255, 255));
     color: rgb(17, 19, 22);
   }
 
   .dark body {
-    background-color: rgb(17, 19, 22);
+    background: linear-gradient(to bottom right, rgb(17, 19, 22), rgb(30, 32, 38), rgb(17, 19, 22)) !important;
     color: rgb(245, 245, 245);
   }
 
   .font-mono {
     font-family: var(--font-jetbrains-mono);
+  }
+
+  .font-playfair {
+    font-family: var(--font-playfair-display);
   }
 
   h1,

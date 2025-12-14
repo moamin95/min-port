@@ -1,6 +1,6 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { JetBrains_Mono, Inter } from "next/font/google"
+import { JetBrains_Mono, Inter, Lato, Playfair_Display } from "next/font/google"
 
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
@@ -15,6 +15,17 @@ const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
 })
 
+const playfairDisplay = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-playfair-display",
+})
+
+const lato = Lato({
+  subsets: ["latin"],
+  weight: ["100", "300", "400", "700", "900"],
+  variable: "--font-lato",
+})
+
 export const metadata: Metadata = {
   title: "Mo Amin - Developer",
   description: "Portfolio of Mo Amin, a full-stack developer specializing in modern web applications",
@@ -26,7 +37,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable} ${playfairDisplay.variable} ${lato.variable}`} suppressHydrationWarning>
       <body className={inter.className} suppressHydrationWarning>
         <ThemeProvider
           attribute="class"

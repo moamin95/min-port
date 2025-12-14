@@ -13,6 +13,8 @@ import {
   Code2,
   LucideIcon,
   Youtube,
+  Moon,
+  Sun,
 } from "lucide-react";
 import AnimatedGridBackground from "./grid-background";
 import {
@@ -44,7 +46,7 @@ interface Project {
   websiteLink: string;
 }
 
-type Section = "home" | "about" | "experience" | "projects" | "contact";
+type Section = "home" | "about" | "experience" | "photography" | "projects" | "contact";
 
 const Port: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
@@ -52,19 +54,21 @@ const Port: React.FC = () => {
   const [activeSection, setActiveSection] = useState<Section>("home");
   const [mounted, setMounted] = useState<boolean>(false);
   const [expandedJobs, setExpandedJobs] = useState<Set<number>>(new Set());
+  const [showScrollIndicator, setShowScrollIndicator] = useState<boolean>(true);
   const { theme, setTheme } = useTheme();
 
-  const toggleJobExpansion = (index: number) => {
-    setExpandedJobs((prev) => {
-      const newSet = new Set(prev);
-      if (newSet.has(index)) {
-        newSet.delete(index);
-      } else {
-        newSet.add(index);
-      }
-      return newSet;
-    });
-  };
+  const technologies = [
+    "React",
+    "Node.js",
+    "Next.js",
+    "JavaScript",
+    "TypeScript",
+    "Tailwind CSS",
+    "Figma",
+    "Redux",
+    "TanStack Query",
+    "PostgreSQL",
+  ];
 
   // Avoid hydration mismatch
   useEffect(() => {
@@ -76,11 +80,28 @@ const Port: React.FC = () => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
 
+      // Check if user has scrolled past contact section
+      const contactElement = document.getElementById("contact");
+      if (contactElement) {
+        const rect = contactElement.getBoundingClientRect();
+        // Hide scroll indicator if contact section is in view or past it
+        setShowScrollIndicator(rect.top > window.innerHeight);
+      }
+
+      // Check if we're at the bottom of the page
+      const isBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 10;
+
+      if (isBottom) {
+        setActiveSection("contact");
+        return;
+      }
+
       // Update active section based on scroll position
       const sections: Section[] = [
         "home",
         "about",
         "experience",
+        "photography",
         "projects",
         "contact",
       ];
@@ -128,123 +149,85 @@ const Port: React.FC = () => {
   }) => (
     <button
       onClick={() => scrollToSection(to)}
-      className={`group flex items-center space-x-2 text-sm font-medium transition-all duration-300 hover:text-gray-300 ${
-        activeSection === to
-          ? "text-gray-300"
-          : "text-neutral-400"
-      }`}
+      className="group flex items-center space-x-2 text-sm font-medium transition-all duration-300 ease-in-out text-neutral-400 hover:text-white"
     >
-      <span className="text-xs text-gray-300/50 opacity-0 transition-opacity group-hover:opacity-100">
+      <span className="text-xs text-gray-300/50 opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100">
         {number}
       </span>
-      <span className="font-mono">{label}</span>
+      <span className="text-sm font-mono font-thin tracking-tighter">{label}</span>
     </button>
   );
-
-  const GlassCard = ({
-    description,
-    tech,
-    idx,
-  }: {
-    description: string;
-    tech: string[];
-    idx: number;
-  }) => {
-    return (
-      <div
-        className={`float-anim relative w-full min-w-[300px] md:min-w-[400px] lg:min-w-[500px] mb-4 ${
-          idx % 2 !== 0 ? "md:-mr-16" : "md:-ml-16"
-        }`}
-      >
-        {/* Glass Container */}
-        <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-2xl backdrop-blur-xl">
-          {/* Subtle white gradient overlay for 'sheen' */}
-          <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent pointer-events-none"></div>
-
-          <div className="relative p-4 md:p-8 flex flex-col gap-5">
-            <p className="text-slate-300 leading-relaxed font-light">
-              {description}
-            </p>
-            {/* <ul className={`flex flex-wrap gap-4 font-mono text-xs text-neutral-600 dark:text-neutral-400 mb-8`}>
-                            {tech.map((t: string) => <li key={t}>{t}</li>)}
-                        </ul> */}
-          </div>
-        </div>
-
-        {/* Reflection effect (bottom) */}
-        <div className="absolute -bottom-4 left-4 right-4 h-4 bg-black/40 blur-lg rounded-[100%]"></div>
-      </div>
-    );
-  };
 
   return (
     <div
       className="min-h-screen text-neutral-200 selection:bg-gray-700 selection:text-gray-100 font-sans transition-colors"
       suppressHydrationWarning
     >
-      {/* Animated Grid Background */}
-      <div className="fixed inset-0 -z-10">
-        <AnimatedGridBackground className="opacity-100" />
-      </div>
 
       {/* Glowing Orbs */}
-      <div className="fixed top-1/4 left-1/4 w-72 h-72 bg-blue-500/20 rounded-full blur-[100px] animate-pulse -z-10"></div>
-      <div className="fixed bottom-1/4 right-1/4 w-96 h-96 bg-green-500/15 rounded-full blur-[100px] -z-10"></div>
+      <div className="fixed top-1/4 left-1/4 w-72 h-72 bg-blue-500/20 dark:bg-red-500/20 rounded-full blur-[100px] animate-pulse -z-10"></div>
+      <div className="fixed bottom-1/4 right-1/4 w-96 h-96 bg-green-500/15 dark:bg-orange-500/15 rounded-full blur-[100px] -z-10"></div>
+
+      {/* Bottom Scroll Fade */}
+      <div className="fixed bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background via-background/80 to-transparent pointer-events-none z-40">
+        {showScrollIndicator && (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <span className="text-muted-foreground text-sm font-mono tracking-widest animate-bounce">
+              SCROLL
+            </span>
+          </div>
+        )}
+      </div>
 
       {/* Navigation */}
       <nav
-        className={`fixed top-0 w-full z-50 transition-all duration-500 ${
-          isScrolled
-            ? "bg-black/30 backdrop-blur-md py-4 border-b border-white/5"
-            : "py-8 bg-transparent"
-        }`}
+        className={`fixed top-0 w-full z-50 transition-all duration-500 ${isScrolled
+          ? "bg-black/30 backdrop-blur-md py-4 border-b border-white/5"
+          : "py-8 bg-transparent"
+          }`}
       >
         <div className="max-w-6xl mx-auto px-6 flex justify-between items-center">
           <button
             onClick={() => scrollToSection("home")}
-            className="text-xl font-bold tracking-tighter text-white z-50"
+            className="group z-50 flex items-center gap-1"
           >
-            mo<span className="text-gray-300">.</span>dev
+            <span className="font-mono text-sm tracking-widest text-gray-400 hover:text-white transition-colors">MOAMIN</span>
           </button>
 
-          {/* Desktop Nav */}
-          <div className="hidden md:flex space-x-8 items-center">
-            <NavLink to="about" label="About" number="01" />
-            <NavLink to="experience" label="Experience" number="02" />
-            <NavLink to="projects" label="Projects" number="03" />
-            <NavLink to="contact" label="Contact" number="04" />
-            {/* <button
-                            onClick={() => mounted && setTheme(theme === 'dark' ? 'light' : 'dark')}
-                            className="ml-2 p-2 rounded-lg hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors"
-                            aria-label="Toggle theme"
-                            suppressHydrationWarning
-                        >
-                            {!mounted ? (
-                                <div className="w-5 h-5" />
-                            ) : theme === 'dark' ? (
-                                <Sun size={20} className="text-gray-300" />
-                            ) : (
-                                <Moon size={20} className="text-gray-700" />
-                            )}
-                        </button> */}
-          </div>
+          {/* Desktop Nav - Theme Toggle Only */}
+          {/* <div className="hidden md:flex items-center">
+            <button
+              onClick={() => mounted && setTheme(theme === 'dark' ? 'light' : 'dark')}
+              className="p-2 rounded-lg hover:bg-white/10 transition-colors"
+              aria-label="Toggle theme"
+              suppressHydrationWarning
+            >
+              {!mounted ? (
+                <div className="w-5 h-5" />
+              ) : theme === 'dark' ? (
+                <Sun size={20} className="text-gray-300" />
+              ) : (
+                <Moon size={20} className="text-gray-700" />
+              )}
+            </button>
+          </div> */}
 
-          {/* Mobile Menu Toggle */}
-          <div className="md:hidden flex items-center gap-2 z-50">
+          {/* Mobile Menu Toggle - Shows up to 1024px */}
+          <div className="lg:hidden flex items-center gap-2 z-50">
             {/* <button
-                            onClick={() => mounted && setTheme(theme === 'dark' ? 'light' : 'dark')}
-                            className="p-2 rounded-lg hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors focus:outline-none"
-                            aria-label="Toggle theme"
-                            suppressHydrationWarning
-                        >
-                            {!mounted ? (
-                                <div className="w-5 h-5" />
-                            ) : theme === 'dark' ? (
-                                <Sun size={20} className="text-gray-300" />
-                            ) : (
-                                <Moon size={20} className="text-gray-700" />
-                            )}
-                        </button> */}
+              onClick={() => mounted && setTheme(theme === 'dark' ? 'light' : 'dark')}
+              className="p-2 rounded-lg hover:bg-white/10 transition-colors focus:outline-none"
+              aria-label="Toggle theme"
+              suppressHydrationWarning
+            >
+              {!mounted ? (
+                <div className="w-5 h-5" />
+              ) : theme === 'dark' ? (
+                <Sun size={20} className="text-gray-300" />
+              ) : (
+                <Moon size={20} className="text-gray-700" />
+              )}
+            </button> */}
             <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
               <SheetTrigger asChild>
                 <button
@@ -260,7 +243,7 @@ const Port: React.FC = () => {
               >
                 <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
                 <nav className="flex flex-col items-center justify-center space-y-8 h-full">
-                  {["About", "Experience", "Projects", "Contact"].map(
+                  {["About", "Experience", "Photography", "Contact"].map(
                     (item: string) => (
                       <button
                         key={item}
@@ -278,45 +261,59 @@ const Port: React.FC = () => {
         </div>
       </nav>
 
+      {/* Left Sidebar Navigation - Desktop Only (1024px+) */}
+      <aside className="hidden xl:flex fixed left-8 top-1/2 -translate-y-1/2 z-40">
+        <nav className="flex flex-col space-y-8">
+          <NavLink to="about" label="ABOUT" number="01" />
+          <NavLink to="experience" label="EXPERIENCE" number="02" />
+          <NavLink to="photography" label="PHOTOGRAPHY" number="03" />
+          <NavLink to="contact" label="CONTACT" number="04" />
+        </nav>
+      </aside>
+
       {/* Hero Section - Full Width */}
       <section
         id="home"
-        className="min-h-screen flex flex-col justify-center pt-20 relative"
+        className="min-h-screen flex flex-col justify-center pt-20 sm:pt-32 md:pt-20 relative"
       >
         <div className="max-w-6xl mx-auto px-6 w-full">
-          <div className="space-y-6 max-w-4xl relative z-10">
-            <span className="text-gray-300 text-md lg:text-xl tracking-wider animate-fade-in-up font-mono font-medium">
-              HI, MY NAME IS
-            </span>
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter text-white leading-[1.1]">
-              Mo Amin.
-              <br />
-              <span className="text-5xl md:text-7xl lg:text-8xl bg-gradient-to-r from-neutral-400 via-neutral-500 to-neutral-400 bg-clip-text text-transparent animate-gradient bg-[length:200%_auto]">
-                I build digital
-                <br />
-              </span>
-              <LayoutTextFlip
-                words={["solutions.", "products.", "experiences."]}
-                className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter bg-gradient-to-r from-neutral-400 via-neutral-500 to-neutral-400 bg-clip-text"
-              />
-            </h1>
+          <div className="grid lg:grid-cols-2 gap-12 items-center relative z-10">
+            {/* Text Content - Left */}
+            <div className="space-y-6">
+              <div className="flex flex-col gap-4">
+                <span className="text-xs md:text-sm lg:text-md font-mono tracking-widest text-gray-500">
+                  PORTFOLIO / 2025 
+                </span>
+                <div className="flex flex-col py-2 lg:py-8">
+                  <span className="font-playfair font-thin tracking-tighter text-5xl md:text-8xl text-white">MO AMIN</span>
+                  <span className="text-2xl md:text-4xl font-thin text-gray-400">
+                    FRONTEND ENGINEER
+                  </span>
+                </div>
+              </div>
+              <p className="max-w-xl font-thin tracking-normal text-neutral-400 text-lg md:text-xl lg:text-2xl leading-relaxed pt-4">
+                I'm a software engineer specializing in building <span className="text-foreground">robust</span> and{" "}
+                <span className="text-foreground">scalable</span> web pages. I also dabble in photography.
+                {/* This year, I'm focused on expanding my portfolio with accessible, human-centered products. */}
+              </p>
+              <div className="pt-8 flex items-center gap-2">
+                <span className="inline-block w-1.5 h-1.5 rounded-full bg-green-600 animate-pulse"></span>
+                <span className="text-xs md:text-sm lg:text-md font-mono tracking-widest text-gray-500">AVAILABLE FOR WORK / NEW YORK</span>
+              </div>
+            </div>
 
-            <p className="max-w-xl text-neutral-400 text-lg md:text-xl leading-relaxed pt-4">
-              I'm a software engineer specializing in building robust and
-              scalable web solutions.
-              {/* This year, I'm focused on expanding my portfolio with accessible, human-centered products. */}
-            </p>
-            <div className="pt-8">
-              <button
-                onClick={() => scrollToSection("projects")}
-                className="group border border-gray-300 text-gray-300 px-8 py-4 rounded-sm text-sm tracking-tight font-mono font-medium hover:bg-gray-300/10 transition-colors flex items-center gap-2"
-              >
-                CHECK OUT MY WORK
-                <ArrowRight
-                  size={16}
-                  className="group-hover:translate-x-1 transition-transform"
+            {/* Image - Right */}
+            <div className="relative group border">
+              <div className="relative z-10 w-full aspect-square rounded transition-all duration-300 overflow-hidden">
+                <Image
+                  src="/moavatar.webp"
+                  alt="Mo Amin"
+                  fill
+                  className="object-cover"
+                  priority
                 />
-              </button>
+              </div>
+              <div className="absolute top-4 left-4 w-full aspect-square border border-gray-300/50 -z-0 transition-transform duration-300 group-hover:translate-x-1 group-hover:translate-y-1"></div>
             </div>
           </div>
         </div>
@@ -326,31 +323,22 @@ const Port: React.FC = () => {
         {/* About Section */}
         <section id="about" className="py-24 md:py-32 relative">
           <div className="relative z-10">
-            <div className="flex items-center gap-4 mb-12">
-              <span className="text-gray-300 text-xl font-semibold">
-                01.
-              </span>
-              <h2 className="text-3xl font-bold text-white tracking-tight">
-                About Me
-              </h2>
-              <div className="h-[1px] bg-neutral-600 flex-grow max-w-xs ml-4"></div>
+            <div className="flex flex-col gap-4 mb-12">
+              <div className="space-y-2">
+                <div className="text-sm font-mono text-gray-500">01 - ABOUT</div>
+                <h2 className="text-3xl sm:text-4xl font-playfair font-light text-white">ABOUT ME</h2>
+              </div>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-12">
-              <div className="md:col-span-2 space-y-6 text-neutral-400 leading-relaxed text-lg lg:text-xl">
+            <div className="flex flex-col gap-12">
+              {/* Text Content - Top */}
+              <div className="space-y-6 font-thin tracking-normal text-neutral-400 text-lg md:text-xl lg:text-2xl leading-relaxed">
                 <p>
-                  With over <span className="font-bold">5 years</span> of
-                  experience spanning agile startups and large enterprises, I've
+                  With over <span className="text-foreground">5 years</span> of
+                  experience, I've
                   worked on everything from complex distributed microservices to
                   monolithic SPAs. This diverse background has given me a
                   versatile skill set that adapts to any environment.
-                </p>
-
-                <p className="text-white">
-                  Currently, I'm a{" "}
-                  <span className="font-bold">Frontend Dev</span> at American
-                  Express, migrating legacy applications to a modern Node JS
-                  architecture.
                 </p>
                 <p>
                   I also consider myself a creative person, so I channel that
@@ -360,7 +348,7 @@ const Port: React.FC = () => {
                 <p>
                   Check out my{" "}
                   <Link
-                    className="text-white font-bold hover:underline"
+                    className="text-white hover:underline"
                     href="https://www.youtube.com/@moamin.create"
                     target="_blank"
                   >
@@ -368,150 +356,87 @@ const Port: React.FC = () => {
                   </Link>
                   !
                 </p>
-
-                {/* <p>
-                                Here are a few technologies I've been working with recently:
-                            </p>
-                            <ul className="grid grid-cols-2 gap-2 text-md pt-2 text-bold">
-                                {['Next JS', 'React', 'Node.js', 'TanStack', 'Tailwind CSS', 'PostgreSQL'].map((tech: string) => (
-                                    <li key={tech} className="flex items-center gap-2 font-mono transition-transform duration-300 hover:scale-110 cursor-pointer hover:font-bold text-neutral-900 dark:text-white">
-                                        <span className="text-gray-700 dark:text-gray-300">▹</span> {tech}
-                                    </li>
-                                ))}
-                            </ul> */}
               </div>
-              <div className="relative group">
-                <div className="relative z-10 w-full aspect-square rounded transition-all duration-300 overflow-hidden">
+
+              {/* Image - Bottom */}
+              {/* <div className="relative group w-full">
+                <div className="relative z-10 w-full aspect-video rounded transition-all duration-300 overflow-hidden">
                   <Image
-                    src="/moavatar.webp"
-                    alt="Mo Amin"
+                    src="/images/orange.jpg"
+                    alt="Orange sunset"
                     fill
                     className="object-cover"
-                    priority
                   />
                 </div>
-                <div className="absolute top-4 left-4 w-full aspect-square border-2 border-gray-300/50 rounded -z-0 transition-transform duration-300 group-hover:translate-x-1 group-hover:translate-y-1"></div>
+                <div className="absolute top-4 left-4 w-full aspect-video border border-gray-300/50 -z-0 transition-transform duration-300 group-hover:translate-x-1 group-hover:translate-y-1"></div>
+              </div> */}
+              <div className="space-y-4 mt-8 overflow-hidden">
+                <span className="text-sm font-mono text-gray-500">TECHNICAL ARSENAL</span>
+                <div className="relative h-12 flex items-center">
+                  <motion.div
+                    className="flex gap-8 whitespace-nowrap"
+                    animate={{
+                      x: ["0%", "-50%"],
+                    }}
+                    transition={{
+                      x: {
+                        repeat: Infinity,
+                        repeatType: "loop",
+                        duration: 30,
+                        ease: "linear",
+                      },
+                    }}
+                  >
+                    {/* Render technologies twice for seamless loop */}
+                    {[...technologies, ...technologies].map((tech, idx) => (
+                      <span
+                        key={idx}
+                        className={`text-2xl md:text-3xl font-thin ${
+                          idx % 2 === 0 ? "text-white" : "text-gray-400"
+                        }`}
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </motion.div>
+                </div>
               </div>
             </div>
           </div>
         </section>
 
         {/* Experience Section */}
-        <section id="experience" className="py-24 md:py-32 relative">
-          <div className="relative z-10">
-            <div className="flex items-center gap-4 mb-12">
-              <span className="text-gray-300 text-xl font-semibold">
-                02.
-              </span>
-              <h2 className="text-3xl font-bold text-white tracking-tight">
-                Where I've Worked
-              </h2>
-              <div className="h-[1px] bg-neutral-600 flex-grow max-w-xs ml-4"></div>
+        <section id="experience" className="min-h-screen py-20 sm:py-32">
+          <div className="space-y-12 sm:space-y-16">
+            <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+              <div className="space-y-2">
+                <div className="text-sm font-mono text-gray-500">02 - EXPERIENCE</div>
+                <h2 className="text-3xl sm:text-4xl font-playfair font-light text-white">SELECTED WORK</h2>
+              </div>
+              <div className="hidden lg:block text-sm text-muted-foreground font-mono">2021 — 2025</div>
             </div>
-
-            <div className="space-y-12 border-l border-neutral-600 ml-3 md:ml-0">
+            <div className="space-y-8 sm:space-y-12">
               {jobs.map((job: Job, idx: number) => (
-                <div key={idx} className="relative pl-8 md:pl-12 group">
-                  <div className="absolute -left-[5px] top-2 w-[9px] h-[9px] rounded-full bg-neutral-600 group-hover:bg-gray-300 transition-colors border border-black"></div>
-
-                  <h3 className="text-xl text-white font-medium">
-                    {job.title}{" "}
-                    <span className="text-gray-300">
-                      @ {job.company}
-                    </span>
-                  </h3>
-                  <p className="text-sm text-neutral-500 mb-4 mt-1 font-mono">
-                    {job.range}
-                  </p>
-
-                  <ul className="space-y-2">
-                    {/* Mobile: Show first duty always, rest collapsible */}
-                    <li className="flex md:hidden items-start gap-3 text-neutral-400 text-sm leading-relaxed">
-                      <span className="text-gray-300 mt-1.5 text-xs">
-                        -
-                      </span>
+                <div key={idx} className="group grid lg:grid-cols-12 gap-4 sm:gap-8 py-6 sm:py-8 border-b border-border/50 hover:border-border transition-colors duration-500">
+                  <div className="lg:col-span-2">
+                    <div className="text-xl sm:text-2xl font-light text-muted-foreground group-hover:text-foreground transition-colors duration-500">
+                      {job.range}
+                    </div>
+                  </div>
+                  <div className="lg:col-span-6 space-y-3">
+                    <div className="leading-6">
+                      <h3 className="text-2xl md:text-3xl font-thin text-foreground">{job.title}</h3>
+                      <div className="font-light font-lato text-lg md:text-xl text-muted-foreground">{job.company}</div>
+                    </div>
+                    <p className="text-muted-foreground text-lato font-thin tracking-normal leading-relaxed text-lg md:text-xl lg:text-2xl lg:max-w-xl">
                       {job.duties[0]}
-                    </li>
-
-                    {job.duties.length > 1 && (
-                      <div className="md:hidden">
-                        <AnimatePresence initial={false}>
-                          {expandedJobs.has(idx) && (
-                            <motion.div
-                              initial={{ opacity: 0, maxHeight: 0 }}
-                              animate={{
-                                opacity: 1,
-                                maxHeight: 1000,
-                                transition: {
-                                  maxHeight: { duration: 0.4, ease: [0.4, 0, 0.2, 1] },
-                                  opacity: { duration: 0.3, ease: "easeOut" }
-                                }
-                              }}
-                              exit={{
-                                opacity: 0,
-                                maxHeight: 0,
-                                transition: {
-                                  maxHeight: { duration: 0.3, ease: [0.4, 0, 0.2, 1] },
-                                  opacity: { duration: 0.2, ease: "easeIn" }
-                                }
-                              }}
-                              style={{ willChange: "max-height, opacity" }}
-                              className="overflow-hidden"
-                            >
-                              {job.duties
-                                .slice(1)
-                                .map((duty: string, i: number) => (
-                                  <li
-                                    key={i + 1}
-                                    className="flex items-start gap-3 text-neutral-400 text-sm leading-relaxed mt-2"
-                                  >
-                                    <span className="text-gray-300 mt-1.5 text-xs">
-                                      -
-                                    </span>
-                                    {duty}
-                                  </li>
-                                ))}
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
-                        <button
-                          onClick={() => toggleJobExpansion(idx)}
-                          className="text-gray-300 text-sm mt-2 transition-transform duration-200 hover:underline"
-                        >
-                          <motion.span
-                            animate={{
-                              rotate: expandedJobs.has(idx) ? 180 : 0,
-                            }}
-                            transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
-                            className="inline-block"
-                          >
-                            ↓
-                          </motion.span>{" "}
-                          {expandedJobs.has(idx) ? "Show less" : "See more"}
-                        </button>
-                      </div>
-                    )}
-
-                    {/* Desktop: Show all duties */}
-                    {job.duties.map((duty: string, i: number) => (
-                      <li
-                        key={i}
-                        className="hidden md:flex items-start gap-3 text-neutral-400 text-lg leading-relaxed"
-                      >
-                        <span className="text-gray-300 mt-1.5 text-xs">
-                          -
-                        </span>
-                        {duty}
-                      </li>
-                    ))}
-                  </ul>
-
-                  {/* Tech Stack Badges - Glassmorphism */}
-                  <div className="flex flex-wrap gap-2 mt-4">
+                    </p>
+                  </div>
+                  <div className="lg:col-span-4 flex flex-wrap gap-2 lg:justify-end mt-2 lg:mt-0">
                     {job.tech.map((tech: string) => (
                       <span
                         key={tech}
-                        className="px-2 py-1 md:px-3 md:py-1.5 text-xs md:text-lg md:text-md font-mono backdrop-blur-md bg-white/5 border border-white/10 rounded-full text-neutral-200 shadow-lg hover:bg-white/10 transition-all duration-300 hover:scale-105"
+                        className="px-2 py-1 text-xs text-muted-foreground rounded group-hover:border-muted-foreground/50 transition-colors duration-500"
                       >
                         {tech}
                       </span>
@@ -523,172 +448,142 @@ const Port: React.FC = () => {
           </div>
         </section>
 
-        {/* Projects Section */}
-        <section id="projects" className="py-24 md:py-32 relative">
+        {/* Photography Section */}
+        <section id="photography" className="py-24 md:py-32 relative">
           <div className="relative z-10">
-            <div className="flex items-center gap-4 mb-12">
-              <span className="text-gray-300 text-xl font-semibold">
-                03.
-              </span>
-              <h2 className="text-3xl font-bold text-white tracking-tight">
-                Some Things I've Built
-              </h2>
-              <div className="h-[1px] bg-neutral-600 flex-grow max-w-xs ml-4"></div>
+            <div className="flex flex-col gap-4 mb-12">
+              <div className="space-y-2">
+                <div className="text-sm font-mono text-gray-500">03 - PHOTOGRAPHY</div>
+                <h2 className="text-3xl sm:text-4xl font-playfair font-light text-white">VISUAL STORIES</h2>
+              </div>
             </div>
 
-            <div className="grid gap-24">
-              {projects.map((project: Project, idx: number) => (
-                <div
-                  key={idx}
-                  className={`relative flex flex-col md:flex-row gap-8 ${
-                    idx % 2 !== 0 ? "md:flex-row-reverse" : ""
-                  }`}
-                >
-                  {/* Project Image/Video Area */}
-                  <div className="md:w-3/5 relative group cursor-pointer">
-                    <div className="absolute inset-0 mix-blend-multiply rounded z-10 hover:bg-transparent transition-all duration-300"></div>
-                    <div className="w-full aspect-video bg-[#050505] rounded border border-neutral-800 relative overflow-hidden flex items-center justify-center">
-                      {project.video ? (
-                        <video
-                          autoPlay
-                          loop
-                          muted
-                          playsInline
-                          className="absolute inset-0 w-full h-full object-cover"
-                        >
-                          {project.videoWebm && (
-                            <source src={project.videoWebm} type="video/webm" />
-                          )}
-                          <source src={project.video} type="video/mp4" />
-                        </video>
-                      ) : project.image ? (
-                        <Image
-                          src={project.image}
-                          alt={project.title}
-                          fill
-                          className="object-cover"
-                        />
-                      ) : (
-                        <>
-                          {/* Abstract content for placeholder */}
-                          <div className="absolute inset-0 bg-neutral-900">
-                            <div className="grid grid-cols-6 h-full opacity-20">
-                              {[...Array(24)].map((_, i: number) => (
-                                <div
-                                  key={i}
-                                  className="border-r border-neutral-700"
-                                ></div>
-                              ))}
-                            </div>
-                          </div>
-                          <project.icon
-                            size={48}
-                            className="text-neutral-600 z-0"
-                          />
-                        </>
-                      )}
-                    </div>
-                  </div>
+            <div className="mb-12">
+              <p className="text-neutral-400 text-lg md:text-xl lg:text-2xl font-thin tracking-normal text-neutral-400">
+                Capturing moments through my lens — a collection of architecture, nature, and portraits
+              </p>
+            </div>
 
-                  {/* Project Content */}
-                  <div
-                    className={`md:w-2/5 flex flex-col justify-center ${
-                      idx % 2 !== 0 ? "md:items-start" : "md:items-end"
-                    } relative z-20`}
-                  >
-                    <span className="text-gray-300 text-xs mb-2 font-medium">
-                      Featured Project
-                    </span>
-                    <h3 className="text-2xl font-bold text-white mb-4 hover:text-gray-300 cursor-pointer transition-colors">
-                      {project.title}
-                    </h3>
-
-                    {/* <div className={`bg-[#e8f4f8] dark:bg-[#112240] p-6 rounded text-sm text-neutral-700 dark:text-neutral-300 shadow-xl mb-4 min-w-[300px] ${idx % 2 !== 0 ? 'md:-mr-16 text-left' : 'md:-ml-16 md:text-right'}`}>
-                                        {project.desc}
-                                    </div> */}
-
-                    <GlassCard
-                      description={project.desc}
-                      tech={project.tech}
-                      idx={idx}
-                    />
-
-                    <ul
-                      className={`flex flex-wrap gap-4 font-mono text-xs text-neutral-400 mb-8`}
-                    >
-                      {project.tech.map((t: string) => (
-                        <li key={t}>{t}</li>
-                      ))}
-                    </ul>
-
-                    <div className="flex gap-4 text-white">
-                      <Link target="_blank" href={project.githubLink}>
-                        <Github className="w-5 h-5 hover:text-gray-300 cursor-pointer transition-colors" />
-                      </Link>
-                      <Link target="_blank" href={project.websiteLink}>
-                        <ExternalLink className="w-5 h-5 hover:text-gray-300 cursor-pointer transition-colors" />
-                      </Link>
-                    </div>
-                  </div>
+            {/* Bento Grid Gallery */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[200px]">
+              {/* Large feature image - cathedral */}
+              <div className="col-span-2 row-span-2 relative group overflow-hidden rounded-lg">
+                <Image
+                  src="/images/cathedral.jpg"
+                  alt="Cathedral architecture"
+                  fill
+                  className="object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
+                  <span className="text-white text-sm font-mono tracking-widest">ARCHITECTURE</span>
                 </div>
-              ))}
-            </div>
+              </div>
 
-            {/* More Projects / Archive Link */}
-            {/* <div className="mt-24 text-center">
-                        <h3 className="text-2xl font-bold text-neutral-900 dark:text-white mb-8">Other Noteworthy Projects</h3>
-                        <div className="grid md:grid-cols-3 gap-4">
-                            {[1, 2, 3].map((item: number) => (
-                                <div key={item} className="bg-neutral-100 dark:bg-[#111] p-6 rounded h-64 flex flex-col justify-between hover:-translate-y-2 transition-transform duration-300 border border-neutral-300 dark:border-neutral-800 hover:border-gray-700/30 dark:hover:border-gray-300/30 group">
-                                    <div className="flex justify-between items-start text-gray-700 dark:text-gray-300">
-                                        <div className="text-4xl">📂</div>
-                                        <div className="flex gap-2 text-neutral-600 dark:text-neutral-400">
-                                            <Github size={18} className="hover:text-gray-700 dark:hover:text-gray-300" />
-                                            <ExternalLink size={18} className="hover:text-gray-700 dark:hover:text-gray-300" />
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <h4 className="text-neutral-900 dark:text-white font-bold text-lg group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors">Project Name</h4>
-                                        <p className="text-sm text-neutral-600 dark:text-neutral-400 mt-2">A minimal description of this specific project that focuses on the core functionality.</p>
-                                    </div>
-                                    <div className="flex gap-3 text-xs text-neutral-500 dark:text-neutral-500 mt-4">
-                                        <span>React</span>
-                                        <span>Express</span>
-                                        <span>AWS</span>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div> */}
+              {/* Cave - tall portrait */}
+              <div className="col-span-1 row-span-2 relative group overflow-hidden rounded-lg">
+                <Image
+                  src="/images/cave.jpg"
+                  alt="Cave exploration"
+                  fill
+                  className="object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
+                  <span className="text-white text-sm font-mono tracking-widest">NATURE</span>
+                </div>
+              </div>
+
+              {/* Orange - medium */}
+              <div className="col-span-1 row-span-1 relative group overflow-hidden rounded-lg">
+                <Image
+                  src="/images/orange.jpg"
+                  alt="Orange sunset"
+                  fill
+                  className="object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-4">
+                  <span className="text-white text-xs font-mono tracking-widest">STREET</span>
+                </div>
+              </div>
+
+              {/* Doggo */}
+              <div className="col-span-1 row-span-1 relative group overflow-hidden rounded-lg">
+                <Image
+                  src="/images/doggo.jpg"
+                  alt="Dog portrait"
+                  fill
+                  className="object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-4">
+                  <span className="text-white text-xs font-mono tracking-widest">PORTRAIT</span>
+                </div>
+              </div>
+
+              {/* Prity2 - wide */}
+              <div className="col-span-2 row-span-1 relative group overflow-hidden rounded-lg">
+                <Image
+                  src="/images/prity2.jpg"
+                  alt="Portrait work"
+                  fill
+                  className="object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-4">
+                  <span className="text-white text-xs font-mono tracking-widest">PEOPLE</span>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
         {/* Contact Section */}
         <section
           id="contact"
-          className="py-24 md:py-48 text-center max-w-2xl mx-auto relative"
+          className="py-24 md:py-32 relative text-center"
         >
           <div className="relative z-10">
-            <span className="text-gray-300 text-sm mb-4 block font-medium">
-              04. What's Next?
-            </span>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              Get In Touch
-            </h2>
-            <p className="text-neutral-400 text-lg mb-12">
-              I'm currently looking for any new opportunities and my inbox is
-              always open. Whether you have a question or just want to say hi,
-              I'll try my best to get back to you!
-            </p>
-            <a
-              href="mailto:mohamin.nyc@gmail.com"
-              className="inline-block border border-gray-300 text-gray-300 px-8 py-4 rounded text-sm font-mono font-medium hover:bg-gray-300/10 transition-colors"
-            >
-              SAY HELLO
-            </a>
+            <div className="flex flex-col gap-4 mb-12">
+              <div className="space-y-2">
+                <div className="text-sm font-mono text-gray-500">04 - CONTACT</div>
+                <h2 className="text-3xl sm:text-4xl font-playfair font-light text-white">GET IN TOUCH</h2>
+              </div>
+            </div>
+
+            <div className="space-y-6 font-thin tracking-normal text-neutral-400 text-lg md:text-xl lg:text-2xl leading-relaxed">
+              <p>
+                I'm currently looking for new opportunities and my inbox is
+                always open. Whether you have a question or just want to say hi,
+                I'll try my best to get back to you!
+              </p>
+
+              <div className="flex sm:flex-row gap-6 sm:gap-8 pt-8 justify-center">
+                <Link
+                  href="mailto:mohamin.nyc@gmail.com"
+                  target="_blank"
+                  className="text-md md:text-lg font-mono font-extralight text-white hover:underline transition-all"
+                >
+                  Email
+                </Link>
+                <Link
+                  href="https://github.com/moamin95"
+                  target="_blank"
+                  className="md:text-lg font-mono text-white hover:underline transition-all"
+                >
+                  GitHub
+                </Link>
+                <Link
+                  href="https://www.linkedin.com/in/mohammed-amin-13a179215/"
+                  target="_blank"
+                  className="md:text-lg font-mono text-white hover:underline transition-all"
+                >
+                  LinkedIn
+                </Link>
+              </div>
+            </div>
           </div>
         </section>
       </main>
+
+
+
 
       {/* Footer */}
       <footer className="text-center py-8 text-neutral-500 text-xs hover:text-gray-300 transition-colors cursor-default">
@@ -709,30 +604,14 @@ const Port: React.FC = () => {
             <Youtube size={20} />
           </Link>
         </div>
-        <p>Designed & Built by Mo Amin</p>
+        <p className="pb-20">Designed & Built by Mo Amin</p>
       </footer>
-
-      {/* Social Sidebar */}
-      <div className="hidden xl:flex flex-col fixed bottom-0 left-12 space-y-6 text-neutral-400 after:content-[''] after:block after:w-[1px] after:h-24 after:bg-neutral-400 after:mx-auto after:mt-6">
-        <Link href="https://github.com/moamin95">
-          <Github className="w-5 h-5 hover:text-gray-300 hover:-translate-y-1 transition-all cursor-pointer" />
-        </Link>
-        <Link href="https://www.linkedin.com/in/mohammed-amin-13a179215/">
-          <Linkedin className="w-5 h-5 hover:text-gray-300 hover:-translate-y-1 transition-all cursor-pointer" />
-        </Link>
-        <Link href="mailto:mohamin.nyc@gmail.com">
-          <Mail className="w-5 h-5 hover:text-gray-300 hover:-translate-y-1 transition-all cursor-pointer" />
-        </Link>
-        <Link target="_blank" href="https://www.youtube.com/@moamin.create">
-          <Youtube size={20} />
-        </Link>
-      </div>
 
       {/* Email Sidebar */}
       <div className="hidden xl:flex flex-col fixed bottom-0 right-12 space-y-6 text-neutral-400 after:content-[''] after:block after:w-[1px] after:h-24 after:bg-neutral-400 after:mx-auto after:mt-6">
         <a
           href="mailto:mohamin.nyc@gmail.com"
-          className="vertical-text text-xs hover:text-gray-300 hover:-translate-y-1 transition-all"
+          className="vertical-text text-xs font-lato tracking-wide font-light hover:text-gray-300 hover:-translate-y-1 transition-all"
         >
           mohamin.nyc@gmail.com
         </a>
@@ -754,9 +633,7 @@ const jobs: Job[] = [
     company: "American Express",
     range: "2024 - Present",
     duties: [
-      "Revamped the banking experience to improve user engagement and retention.",
-      "Optimizing front end architecture to improve Core Web Vitals, most notably reducing LCP by 1 second.",
-      "Enhancing UX for 36 million monthly active users, spreading across all domestic and international markets",
+      "Develop React-based micro-frontend modules using a proprietary Node.js orchestration framework.",
     ],
     tech: ["Node JS", "React", "TanStack", "GHA"],
   },
@@ -765,9 +642,7 @@ const jobs: Job[] = [
     company: "CVS Health",
     range: "2022 - 2024",
     duties: [
-      "Developed reusable and scalable web components for payment products on the e-commerce website.",
-      "Collaborated with B2B partners to integrate secure payment forms, improving payment processing by 25%.",
-      "Spearheaded WCAG compliance initiative to reduce 90% of A11y defects across all payments modules.",
+      "Built scalable, reusable React and Stencil.js components for e-commerce payment flows."
     ],
     tech: ["Next JS", "Angular", "GraphQL", "Jenkins"],
   },
@@ -776,7 +651,6 @@ const jobs: Job[] = [
     company: "Merkle",
     range: "2021 - 2022",
     duties: [
-      "Architected single page applications for marketing dashboards, following white label model for reproducibility across 20+ Fortune 500 companies.",
       "Designed and developed an Express.js reverse-proxy server.",
     ],
     tech: ["React", "Express", "MySQL", "AWS"],
@@ -794,14 +668,6 @@ const projects: Project[] = [
     image: "/trackr.png",
     githubLink: "https://github.com/moamin95/trackr",
     websiteLink: "https://trackr-wheat.vercel.app/",
-  },
-  {
-    title: "Coming Soon...",
-    desc: "Building a media page for my photography and videography portfolio. Tinkering with lazy loading.",
-    tech: ["React", "Styled Components", "Express", "Heroku"],
-    icon: Code2,
-    githubLink: "",
-    websiteLink: "",
   },
 ];
 
