@@ -382,7 +382,7 @@ const Port: React.FC = () => {
                   energy into photography, content creation, and code.
                 </p>
 
-                <p>
+                {/* <p>
                   Check out my{" "}
                   <Link
                     className="text-neutral-900 dark:text-white hover:underline"
@@ -392,7 +392,7 @@ const Port: React.FC = () => {
                     youtube channel
                   </Link>
                   !
-                </p>
+                </p> */}
               </div>
 
               <div className="space-y-4 mt-8 overflow-hidden">
