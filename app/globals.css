@@ -69,7 +69,7 @@
   }
 
   .dark body {
-    background: linear-gradient(to bottom right, rgb(17, 19, 22), rgb(30, 32, 38), rgb(17, 19, 22)) !important;
+    background: linear-gradient(to bottom right, rgb(5, 7, 10), rgb(10, 12, 15), rgb(5, 7, 10)) !important;
     color: rgb(245, 245, 245);
   }
 

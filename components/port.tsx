@@ -7,8 +7,6 @@ import {
   Code2,
   LucideIcon,
   X,
-  Sun,
-  Moon
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
