@@ -7,8 +7,10 @@ import {
   Code2,
   LucideIcon,
   X,
+  Sun,
+  Moon
 } from "lucide-react";
-import { motion, AnimatePresence, useScroll, useTransform } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
 
 interface Job {
   title: string;
@@ -36,6 +38,7 @@ interface PhotoMetadata {
   category: string;
   year: string;
   aperture: string;
+  focalLength: string;
   camera: string;
   orientation: string;
 }
@@ -94,6 +97,7 @@ const photos: PhotoMetadata[] = [
     category: "ARCHITECTURE",
     year: "2025",
     aperture: "f/2.8",
+    focalLength: "35mm",
     camera: "Sony A7III",
     orientation: "portrait"
   },
@@ -103,6 +107,7 @@ const photos: PhotoMetadata[] = [
     category: "NATURE",
     year: "2025",
     aperture: "f/4.0",
+    focalLength: "24mm",
     camera: "Sony A6700",
     orientation: "portrait"
   },
@@ -112,6 +117,7 @@ const photos: PhotoMetadata[] = [
     category: "STREET",
     year: "2025",
     aperture: "f/1.8",
+    focalLength: "50mm",
     camera: "Sony A7III",
     orientation: "portrait"
   },
@@ -121,6 +127,7 @@ const photos: PhotoMetadata[] = [
     category: "PORTRAIT",
     year: "2025",
     aperture: "f/1.4",
+    focalLength: "85mm",
     camera: "Sony A6700",
     orientation: "portrait"
   },
@@ -130,6 +137,7 @@ const photos: PhotoMetadata[] = [
     category: "PEOPLE",
     year: "2025",
     aperture: "f/2.0",
+    focalLength: "50mm",
     camera: "Sony A7III",
     orientation: "portrait"
   },
@@ -143,13 +151,6 @@ const Port: React.FC = () => {
   const [showScrollIndicator, setShowScrollIndicator] = useState<boolean>(true);
   const [selectedPhoto, setSelectedPhoto] = useState<PhotoMetadata | null>(null);
   const { theme, setTheme } = useTheme();
-
-  // Parallax scroll effects
-  const { scrollY } = useScroll();
-  const heroImageY = useTransform(scrollY, [0, 100], [0, 50]);
-  const heroTextY = useTransform(scrollY, [0, 500], [0, -50]);
-  const orb1Y = useTransform(scrollY, [0, 1000], [0, 300]);
-  const orb2Y = useTransform(scrollY, [0, 1000], [0, -200]);
 
   const technologies = [
     "React",
@@ -244,12 +245,10 @@ const Port: React.FC = () => {
     >
 
       {/* Glowing Orbs */}
-      <motion.div
-        style={{ y: orb1Y }}
+      <div
         className="fixed top-1/4 left-1/4 w-72 h-72 bg-blue-500/20 dark:bg-red-500/20 rounded-full blur-[100px] animate-pulse -z-10"
       />
-      <motion.div
-        style={{ y: orb2Y }}
+      <div
         className="fixed bottom-1/4 right-1/4 w-96 h-96 bg-green-500/15 dark:bg-orange-500/15 rounded-full blur-[100px] -z-10"
       />
 
@@ -317,7 +316,7 @@ const Port: React.FC = () => {
         <div className="max-w-6xl mx-auto px-6 w-full">
           <div className="grid lg:grid-cols-2 gap-12 items-center relative z-10">
             {/* Text Content - Left */}
-            <motion.div className="space-y-6" style={{ y: heroTextY }}>
+            <div className="space-y-6">
               <div className="flex flex-col gap-4">
                 <span className="text-xs md:text-sm lg:text-md font-mono tracking-widest text-gray-500">
                   PORTFOLIO / 2025
@@ -338,10 +337,10 @@ const Port: React.FC = () => {
                 <span className="inline-block w-1.5 h-1.5 rounded-full bg-green-600 animate-pulse"></span>
                 <span className="text-xs md:text-sm lg:text-md font-mono tracking-widest text-gray-500">AVAILABLE FOR WORK / NEW YORK</span>
               </div>
-            </motion.div>
+            </div>
 
             {/* Image - Right */}
-            <motion.div className="relative group border" style={{ y: heroImageY }}>
+            <div className="relative group border">
               <div className="relative z-10 w-full aspect-square rounded transition-all duration-300 overflow-hidden">
                 <Image
                   src="/moavatar.webp"
@@ -352,7 +351,7 @@ const Port: React.FC = () => {
                 />
               </div>
               <div className="absolute top-4 left-4 w-full aspect-square border border-gray-300/50 -z-0 transition-transform duration-300 group-hover:translate-x-1 group-hover:translate-y-1"></div>
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
@@ -497,20 +496,16 @@ const Port: React.FC = () => {
 
             <div className="mb-12">
               <p className="text-neutral-400 text-lg md:text-xl lg:text-2xl font-extralight tracking-normal text-neutral-400">
-                Capturing moments through my lens — a collection of architecture, nature, and portraits
+                Capturing moments through my lens — a collection of architecture, nature, and portraits. Currently shooting on a Sony A7III.
               </p>
             </div>
 
             {/* Bento Grid Gallery */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[200px]">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[200px] lg:auto-rows-[300px]">
               {/* Large feature image - cathedral */}
-              <motion.div
+              <div
                 onClick={() => setSelectedPhoto(photos[0])}
                 className="col-span-2 row-span-2 relative group overflow-hidden rounded-lg cursor-pointer"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
               >
                 <Image
                   src={photos[0].src}
@@ -521,16 +516,12 @@ const Port: React.FC = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
                   <span className="text-white text-sm font-mono tracking-widest">{photos[0].category}</span>
                 </div>
-              </motion.div>
+              </div>
 
               {/* Cave - tall portrait */}
-              <motion.div
+              <div
                 onClick={() => setSelectedPhoto(photos[1])}
                 className="col-span-1 row-span-2 relative group overflow-hidden rounded-lg cursor-pointer"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
               >
                 <Image
                   src={photos[1].src}
@@ -541,16 +532,12 @@ const Port: React.FC = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
                   <span className="text-white text-sm font-mono tracking-widest">{photos[1].category}</span>
                 </div>
-              </motion.div>
+              </div>
 
               {/* Orange - medium */}
-              <motion.div
+              <div
                 onClick={() => setSelectedPhoto(photos[2])}
                 className="col-span-1 row-span-1 relative group overflow-hidden rounded-lg cursor-pointer"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
               >
                 <Image
                   src={photos[2].src}
@@ -561,16 +548,12 @@ const Port: React.FC = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-4">
                   <span className="text-white text-xs font-mono tracking-widest">{photos[2].category}</span>
                 </div>
-              </motion.div>
+              </div>
 
               {/* Doggo */}
-              <motion.div
+              <div
                 onClick={() => setSelectedPhoto(photos[3])}
                 className="col-span-1 row-span-1 relative group overflow-hidden rounded-lg cursor-pointer"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
               >
                 <Image
                   src={photos[3].src}
@@ -581,16 +564,12 @@ const Port: React.FC = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-4">
                   <span className="text-white text-xs font-mono tracking-widest">{photos[3].category}</span>
                 </div>
-              </motion.div>
+              </div>
 
               {/* Prity2 - wide */}
-              <motion.div
+              <div
                 onClick={() => setSelectedPhoto(photos[4])}
                 className="col-span-2 row-span-1 relative group overflow-hidden rounded-lg cursor-pointer"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
               >
                 <Image
                   src={photos[4].src}
@@ -601,7 +580,7 @@ const Port: React.FC = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-4">
                   <span className="text-white text-xs font-mono tracking-widest">{photos[4].category}</span>
                 </div>
-              </motion.div>
+              </div>
             </div>
           </div>
         </section>
@@ -665,10 +644,10 @@ const Port: React.FC = () => {
             className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4 cursor-pointer"
           >
             <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              transition={{ type: "spring", duration: 0.5 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
               onClick={(e) => e.stopPropagation()}
               className="relative max-w-6xl w-full cursor-default"
             >
@@ -681,12 +660,12 @@ const Port: React.FC = () => {
                 <X size={32} />
               </button>
 
-              <div className="grid md:grid-cols-3 gap-6">
-                {/* Image - Takes 2 columns */}
-                <div className={`md:col-span-2 relative overflow-hidden rounded-lg ${
+              {/* Image with hover footer - 2/3 width on desktop like before */}
+              <div className="relative group max-w-4xl mx-auto">
+                <div className={`relative overflow-hidden rounded-lg ${
                   selectedPhoto.orientation === "portrait"
-                    ? "aspect-[3/4] md:aspect-[3/4]"
-                    : "aspect-video md:aspect-[4/3]"
+                    ? "aspect-[3/4]"
+                    : "aspect-video"
                 }`}>
                   <Image
                     src={selectedPhoto.src}
@@ -695,35 +674,14 @@ const Port: React.FC = () => {
                     className="object-cover"
                     priority
                   />
-                </div>
 
-                {/* Metadata - Takes 1 column */}
-                <div className="flex flex-col justify-center space-y-6 bg-neutral-900/50 backdrop-blur-sm p-6 rounded-lg border border-white/10">
-                  <div className="space-y-4">
-                    <div>
-                      <div className="text-xs font-mono text-gray-500 mb-1">CATEGORY</div>
-                      <div className="text-lg font-lato tracking-tighter font-light text-white">{selectedPhoto.category}</div>
+                  {/* Footer overlay on hover */}
+                  <div className="absolute bottom-0 left-0 right-0 bg-black/80 backdrop-blur-sm p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="flex justify-between items-center text-xs md:text-sm font-mono text-gray-300">
+                      <span>{selectedPhoto.aperture}</span>
+                      <span>{selectedPhoto.focalLength}</span>
+                      <span>{selectedPhoto.camera}</span>
                     </div>
-
-                    <div>
-                      <div className="text-xs font-mono text-gray-500 mb-1">YEAR</div>
-                      <div className="text-lg font-lato tracking-tighter font-light text-white">{selectedPhoto.year}</div>
-                    </div>
-
-                    <div>
-                      <div className="text-xs font-mono text-gray-500 mb-1">APERTURE</div>
-                      <div className="text-lg font-lato tracking-tighter font-light text-white">{selectedPhoto.aperture}</div>
-                    </div>
-
-                    <div>
-                      <div className="text-xs font-mono text-gray-500 mb-1">CAMERA</div>
-                      <div className="text-lg font-lato tracking-tighter font-light text-white">{selectedPhoto.camera}</div>
-                    </div>
-                  </div>
-
-                  {/* Hide description on mobile to save space */}
-                  <div className="hidden md:block pt-4 border-t border-white/10">
-                    <p className="text-sm text-gray-400 font-light">{selectedPhoto.alt}</p>
                   </div>
                 </div>
               </div>
