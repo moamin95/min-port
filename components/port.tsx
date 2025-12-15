@@ -279,7 +279,7 @@ const Port: React.FC = () => {
           </button>
 
           {/* Desktop Nav - Theme Toggle Only */}
-          <div className="hidden md:flex items-center">
+          <div className="flex items-center">
             <button
               onClick={() => mounted && setTheme(theme === 'dark' ? 'light' : 'dark')}
               className="p-2 rounded-lg border border-transparent hover:border-neutral-400 dark:hover:border-neutral-600 hover:bg-white/5 dark:hover:bg-white/10 transition-all duration-300"
