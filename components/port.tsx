@@ -4,20 +4,11 @@ import { useTheme } from "next-themes";
 import Link from "next/link";
 import Image from "next/image";
 import {
-  ArrowRight,
-  Github,
-  Linkedin,
-  Mail,
-  ExternalLink,
   Code2,
   LucideIcon,
-  Youtube,
-  Moon,
-  Sun,
+  X,
 } from "lucide-react";
-import AnimatedGridBackground from "./grid-background";
-import { LayoutTextFlip } from "./ui/layout-text-flip";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence, useScroll, useTransform } from "motion/react";
 
 interface Job {
   title: string;
@@ -39,7 +30,110 @@ interface Project {
   websiteLink: string;
 }
 
+interface PhotoMetadata {
+  src: string;
+  alt: string;
+  category: string;
+  year: string;
+  aperture: string;
+  camera: string;
+  orientation: string;
+}
+
 type Section = "home" | "about" | "experience" | "photography" | "projects" | "contact";
+
+// Data
+const jobs: Job[] = [
+  {
+    title: "Front End Engineer",
+    company: "American Express",
+    range: "2024 - Present",
+    duties: [
+      "Develop React-based micro-frontend modules using a proprietary Node.js orchestration framework.",
+    ],
+    tech: ["Node JS", "React", "TanStack", "GHA"],
+  },
+  {
+    title: "Software Engineer",
+    company: "CVS Health",
+    range: "2022 - 2024",
+    duties: [
+      "Built scalable, reusable React and Stencil.js components for e-commerce payment flows."
+    ],
+    tech: ["Next JS", "Angular", "GraphQL", "Jenkins"],
+  },
+  {
+    title: "Web Engineer",
+    company: "Merkle",
+    range: "2021 - 2022",
+    duties: [
+      "Designed and developed an Express.js reverse-proxy server.",
+    ],
+    tech: ["React", "Express", "MySQL", "AWS"],
+  },
+];
+
+const projects: Project[] = [
+  {
+    title: "trackr",
+    desc: "A comprehensive financial management platform that combines modern design with powerful functionality.",
+    tech: ["Next JS", "React", "shadcn/ui", "Recharts", "TanStack"],
+    icon: Code2,
+    video: "/trackr.mp4",
+    videoWebm: "/trackr.webm",
+    image: "/trackr.png",
+    githubLink: "https://github.com/moamin95/trackr",
+    websiteLink: "https://trackr-wheat.vercel.app/",
+  },
+];
+
+const photos: PhotoMetadata[] = [
+  {
+    src: "/images/cathedral.jpg",
+    alt: "Cathedral architecture",
+    category: "ARCHITECTURE",
+    year: "2025",
+    aperture: "f/2.8",
+    camera: "Sony A7III",
+    orientation: "portrait"
+  },
+  {
+    src: "/images/cave.jpg",
+    alt: "Cave exploration",
+    category: "NATURE",
+    year: "2025",
+    aperture: "f/4.0",
+    camera: "Sony A6700",
+    orientation: "portrait"
+  },
+  {
+    src: "/images/orange.jpg",
+    alt: "Orange sunset",
+    category: "STREET",
+    year: "2025",
+    aperture: "f/1.8",
+    camera: "Sony A7III",
+    orientation: "portrait"
+  },
+  {
+    src: "/images/doggo.jpg",
+    alt: "Dog portrait",
+    category: "PORTRAIT",
+    year: "2025",
+    aperture: "f/1.4",
+    camera: "Sony A6700",
+    orientation: "portrait"
+  },
+  {
+    src: "/images/prity2.jpg",
+    alt: "Portrait work",
+    category: "PEOPLE",
+    year: "2025",
+    aperture: "f/2.0",
+    camera: "Sony A7III",
+    orientation: "portrait"
+  },
+];
 
 const Port: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
@@ -47,7 +141,15 @@ const Port: React.FC = () => {
   const [mounted, setMounted] = useState<boolean>(false);
   const [expandedJobs, setExpandedJobs] = useState<Set<number>>(new Set());
   const [showScrollIndicator, setShowScrollIndicator] = useState<boolean>(true);
+  const [selectedPhoto, setSelectedPhoto] = useState<PhotoMetadata | null>(null);
   const { theme, setTheme } = useTheme();
+
+  // Parallax scroll effects
+  const { scrollY } = useScroll();
+  const heroImageY = useTransform(scrollY, [0, 100], [0, 50]);
+  const heroTextY = useTransform(scrollY, [0, 500], [0, -50]);
+  const orb1Y = useTransform(scrollY, [0, 1000], [0, 300]);
+  const orb2Y = useTransform(scrollY, [0, 1000], [0, -200]);
 
   const technologies = [
     "React",
@@ -142,8 +244,14 @@ const Port: React.FC = () => {
     >
 
       {/* Glowing Orbs */}
-      <div className="fixed top-1/4 left-1/4 w-72 h-72 bg-blue-500/20 dark:bg-red-500/20 rounded-full blur-[100px] animate-pulse -z-10"></div>
-      <div className="fixed bottom-1/4 right-1/4 w-96 h-96 bg-green-500/15 dark:bg-orange-500/15 rounded-full blur-[100px] -z-10"></div>
+      <motion.div
+        style={{ y: orb1Y }}
+        className="fixed top-1/4 left-1/4 w-72 h-72 bg-blue-500/20 dark:bg-red-500/20 rounded-full blur-[100px] animate-pulse -z-10"
+      />
+      <motion.div
+        style={{ y: orb2Y }}
+        className="fixed bottom-1/4 right-1/4 w-96 h-96 bg-green-500/15 dark:bg-orange-500/15 rounded-full blur-[100px] -z-10"
+      />
 
       {/* Bottom Scroll Fade */}
       <div className="fixed bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background via-background/80 to-transparent pointer-events-none z-40">
@@ -209,10 +317,10 @@ const Port: React.FC = () => {
         <div className="max-w-6xl mx-auto px-6 w-full">
           <div className="grid lg:grid-cols-2 gap-12 items-center relative z-10">
             {/* Text Content - Left */}
-            <div className="space-y-6">
+            <motion.div className="space-y-6" style={{ y: heroTextY }}>
               <div className="flex flex-col gap-4">
                 <span className="text-xs md:text-sm lg:text-md font-mono tracking-widest text-gray-500">
-                  PORTFOLIO / 2025 
+                  PORTFOLIO / 2025
                 </span>
                 <div className="flex flex-col py-2 lg:py-8">
                   <span className="font-playfair font-extralight tracking-tighter text-5xl md:text-8xl text-white">MO AMIN</span>
@@ -230,10 +338,10 @@ const Port: React.FC = () => {
                 <span className="inline-block w-1.5 h-1.5 rounded-full bg-green-600 animate-pulse"></span>
                 <span className="text-xs md:text-sm lg:text-md font-mono tracking-widest text-gray-500">AVAILABLE FOR WORK / NEW YORK</span>
               </div>
-            </div>
+            </motion.div>
 
             {/* Image - Right */}
-            <div className="relative group border">
+            <motion.div className="relative group border" style={{ y: heroImageY }}>
               <div className="relative z-10 w-full aspect-square rounded transition-all duration-300 overflow-hidden">
                 <Image
                   src="/moavatar.webp"
@@ -244,7 +352,7 @@ const Port: React.FC = () => {
                 />
               </div>
               <div className="absolute top-4 left-4 w-full aspect-square border border-gray-300/50 -z-0 transition-transform duration-300 group-hover:translate-x-1 group-hover:translate-y-1"></div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -321,9 +429,8 @@ const Port: React.FC = () => {
                     {[...technologies, ...technologies].map((tech, idx) => (
                       <span
                         key={idx}
-                        className={`text-2xl md:text-3xl font-extralight ${
-                          idx % 2 === 0 ? "text-white" : "text-gray-400"
-                        }`}
+                        className={`text-2xl md:text-3xl font-extralight ${idx % 2 === 0 ? "text-white" : "text-gray-400"
+                          }`}
                       >
                         {tech}
                       </span>
@@ -397,69 +504,104 @@ const Port: React.FC = () => {
             {/* Bento Grid Gallery */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[200px]">
               {/* Large feature image - cathedral */}
-              <div className="col-span-2 row-span-2 relative group overflow-hidden rounded-lg">
+              <motion.div
+                onClick={() => setSelectedPhoto(photos[0])}
+                className="col-span-2 row-span-2 relative group overflow-hidden rounded-lg cursor-pointer"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+              >
                 <Image
-                  src="/images/cathedral.jpg"
-                  alt="Cathedral architecture"
+                  src={photos[0].src}
+                  alt={photos[0].alt}
                   fill
                   className="object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
-                  <span className="text-white text-sm font-mono tracking-widest">ARCHITECTURE</span>
+                  <span className="text-white text-sm font-mono tracking-widest">{photos[0].category}</span>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Cave - tall portrait */}
-              <div className="col-span-1 row-span-2 relative group overflow-hidden rounded-lg">
+              <motion.div
+                onClick={() => setSelectedPhoto(photos[1])}
+                className="col-span-1 row-span-2 relative group overflow-hidden rounded-lg cursor-pointer"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
+              >
                 <Image
-                  src="/images/cave.jpg"
-                  alt="Cave exploration"
+                  src={photos[1].src}
+                  alt={photos[1].alt}
                   fill
                   className="object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
-                  <span className="text-white text-sm font-mono tracking-widest">NATURE</span>
+                  <span className="text-white text-sm font-mono tracking-widest">{photos[1].category}</span>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Orange - medium */}
-              <div className="col-span-1 row-span-1 relative group overflow-hidden rounded-lg">
+              <motion.div
+                onClick={() => setSelectedPhoto(photos[2])}
+                className="col-span-1 row-span-1 relative group overflow-hidden rounded-lg cursor-pointer"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+              >
                 <Image
-                  src="/images/orange.jpg"
-                  alt="Orange sunset"
+                  src={photos[2].src}
+                  alt={photos[2].alt}
                   fill
                   className="object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-4">
-                  <span className="text-white text-xs font-mono tracking-widest">STREET</span>
+                  <span className="text-white text-xs font-mono tracking-widest">{photos[2].category}</span>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Doggo */}
-              <div className="col-span-1 row-span-1 relative group overflow-hidden rounded-lg">
+              <motion.div
+                onClick={() => setSelectedPhoto(photos[3])}
+                className="col-span-1 row-span-1 relative group overflow-hidden rounded-lg cursor-pointer"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
+              >
                 <Image
-                  src="/images/doggo.jpg"
-                  alt="Dog portrait"
+                  src={photos[3].src}
+                  alt={photos[3].alt}
                   fill
                   className="object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-4">
-                  <span className="text-white text-xs font-mono tracking-widest">PORTRAIT</span>
+                  <span className="text-white text-xs font-mono tracking-widest">{photos[3].category}</span>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Prity2 - wide */}
-              <div className="col-span-2 row-span-1 relative group overflow-hidden rounded-lg">
+              <motion.div
+                onClick={() => setSelectedPhoto(photos[4])}
+                className="col-span-2 row-span-1 relative group overflow-hidden rounded-lg cursor-pointer"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
+              >
                 <Image
-                  src="/images/prity2.jpg"
-                  alt="Portrait work"
+                  src={photos[4].src}
+                  alt={photos[4].alt}
                   fill
                   className="object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-4">
-                  <span className="text-white text-xs font-mono tracking-widest">PEOPLE</span>
+                  <span className="text-white text-xs font-mono tracking-widest">{photos[4].category}</span>
                 </div>
-              </div>
+              </motion.div>
             </div>
           </div>
         </section>
@@ -512,8 +654,83 @@ const Port: React.FC = () => {
         </section>
       </main>
 
+      {/* Photo Modal */}
+      <AnimatePresence>
+        {selectedPhoto && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedPhoto(null)}
+            className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4 cursor-pointer"
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ type: "spring", duration: 0.5 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative max-w-6xl w-full cursor-default"
+            >
+              {/* Close button */}
+              <button
+                onClick={() => setSelectedPhoto(null)}
+                className="absolute -top-12 right-0 text-white hover:text-gray-300 transition-colors z-10"
+                aria-label="Close modal"
+              >
+                <X size={32} />
+              </button>
 
+              <div className="grid md:grid-cols-3 gap-6">
+                {/* Image - Takes 2 columns */}
+                <div className={`md:col-span-2 relative overflow-hidden rounded-lg ${
+                  selectedPhoto.orientation === "portrait"
+                    ? "aspect-[3/4] md:aspect-[3/4]"
+                    : "aspect-video md:aspect-[4/3]"
+                }`}>
+                  <Image
+                    src={selectedPhoto.src}
+                    alt={selectedPhoto.alt}
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                </div>
 
+                {/* Metadata - Takes 1 column */}
+                <div className="flex flex-col justify-center space-y-6 bg-neutral-900/50 backdrop-blur-sm p-6 rounded-lg border border-white/10">
+                  <div className="space-y-4">
+                    <div>
+                      <div className="text-xs font-mono text-gray-500 mb-1">CATEGORY</div>
+                      <div className="text-lg font-lato tracking-tighter font-light text-white">{selectedPhoto.category}</div>
+                    </div>
+
+                    <div>
+                      <div className="text-xs font-mono text-gray-500 mb-1">YEAR</div>
+                      <div className="text-lg font-lato tracking-tighter font-light text-white">{selectedPhoto.year}</div>
+                    </div>
+
+                    <div>
+                      <div className="text-xs font-mono text-gray-500 mb-1">APERTURE</div>
+                      <div className="text-lg font-lato tracking-tighter font-light text-white">{selectedPhoto.aperture}</div>
+                    </div>
+
+                    <div>
+                      <div className="text-xs font-mono text-gray-500 mb-1">CAMERA</div>
+                      <div className="text-lg font-lato tracking-tighter font-light text-white">{selectedPhoto.camera}</div>
+                    </div>
+                  </div>
+
+                  {/* Hide description on mobile to save space */}
+                  <div className="hidden md:block pt-4 border-t border-white/10">
+                    <p className="text-sm text-gray-400 font-light">{selectedPhoto.alt}</p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Footer */}
       <footer className="text-center py-8 text-neutral-500 text-xs hover:text-gray-300 transition-colors cursor-default">
@@ -538,50 +755,5 @@ const Port: React.FC = () => {
     </div>
   );
 };
-
-// Data
-const jobs: Job[] = [
-  {
-    title: "Front End Engineer",
-    company: "American Express",
-    range: "2024 - Present",
-    duties: [
-      "Develop React-based micro-frontend modules using a proprietary Node.js orchestration framework.",
-    ],
-    tech: ["Node JS", "React", "TanStack", "GHA"],
-  },
-  {
-    title: "Software Engineer",
-    company: "CVS Health",
-    range: "2022 - 2024",
-    duties: [
-      "Built scalable, reusable React and Stencil.js components for e-commerce payment flows."
-    ],
-    tech: ["Next JS", "Angular", "GraphQL", "Jenkins"],
-  },
-  {
-    title: "Web Engineer",
-    company: "Merkle",
-    range: "2021 - 2022",
-    duties: [
-      "Designed and developed an Express.js reverse-proxy server.",
-    ],
-    tech: ["React", "Express", "MySQL", "AWS"],
-  },
-];
-
-const projects: Project[] = [
-  {
-    title: "trackr",
-    desc: "A comprehensive financial management platform that combines modern design with powerful functionality.",
-    tech: ["Next JS", "React", "shadcn/ui", "Recharts", "TanStack"],
-    icon: Code2,
-    video: "/trackr.mp4",
-    videoWebm: "/trackr.webm",
-    image: "/trackr.png",
-    githubLink: "https://github.com/moamin95/trackr",
-    websiteLink: "https://trackr-wheat.vercel.app/",
-  },
-];
 
 export default Port;
