@@ -229,9 +229,9 @@ const Port: React.FC = () => {
   }) => (
     <button
       onClick={() => scrollToSection(to)}
-      className="group flex items-center space-x-2 text-sm font-medium transition-all duration-300 ease-in-out text-neutral-400 hover:text-white"
+      className="group flex items-center space-x-2 text-sm font-medium transition-all duration-300 ease-in-out text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white"
     >
-      <span className="text-xs text-gray-300/50 opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100">
+      <span className="text-xs text-gray-600/50 dark:text-gray-300/50 opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100">
         {number}
       </span>
       <span className="text-sm font-mono font-extralight tracking-tighter">{label}</span>
@@ -240,23 +240,23 @@ const Port: React.FC = () => {
 
   return (
     <div
-      className="min-h-screen text-neutral-200 selection:bg-gray-700 selection:text-gray-100 font-sans transition-colors"
+      className="min-h-screen text-neutral-800 dark:text-neutral-200 selection:bg-gray-300 dark:selection:bg-gray-700 selection:text-gray-900 dark:selection:text-gray-100 font-sans transition-colors"
       suppressHydrationWarning
     >
 
       {/* Glowing Orbs */}
       <div
-        className="fixed top-1/4 left-1/4 w-72 h-72 bg-blue-500/20 dark:bg-red-500/20 rounded-full blur-[100px] animate-pulse -z-10"
+        className="fixed top-1/4 left-1/4 w-72 h-72 bg-blue-500/50 dark:bg-red-500/20 rounded-full blur-[100px] animate-pulse -z-10"
       />
       <div
-        className="fixed bottom-1/4 right-1/4 w-96 h-96 bg-green-500/15 dark:bg-orange-500/15 rounded-full blur-[100px] animate-pulse -z-10"
+        className="fixed bottom-1/4 right-1/4 w-96 h-96 bg-green-500/45 dark:bg-orange-500/15 rounded-full blur-[100px] animate-pulse -z-10"
       />
 
       {/* Bottom Scroll Fade */}
       <div className="fixed bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background via-background/80 to-transparent pointer-events-none z-40">
         {showScrollIndicator && (
           <div className="absolute inset-0 flex items-center justify-center">
-            <span className="text-muted-foreground text-sm font-mono tracking-widest animate-bounce">
+            <span className="text-neutral-600 dark:text-muted-foreground text-sm font-mono tracking-widest animate-bounce">
               SCROLL
             </span>
           </div>
@@ -275,14 +275,14 @@ const Port: React.FC = () => {
             onClick={() => scrollToSection("home")}
             className="group z-50 flex items-center gap-1"
           >
-            <span className="font-mono text-sm tracking-widest text-gray-400 hover:text-white transition-colors">MOAMIN</span>
+            <span className="font-mono text-sm tracking-widest text-gray-700 dark:text-gray-400 hover:text-neutral-900 dark:hover:text-white transition-colors">MOAMIN</span>
           </button>
 
           {/* Desktop Nav - Theme Toggle Only */}
-          {/* <div className="hidden md:flex items-center">
+          <div className="hidden md:flex items-center">
             <button
               onClick={() => mounted && setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className="p-2 rounded-lg hover:bg-white/10 transition-colors"
+              className="p-2 rounded-lg border border-transparent hover:border-neutral-400 dark:hover:border-neutral-600 hover:bg-white/5 dark:hover:bg-white/10 transition-all duration-300"
               aria-label="Toggle theme"
               suppressHydrationWarning
             >
@@ -294,7 +294,7 @@ const Port: React.FC = () => {
                 <Moon size={20} className="text-gray-700" />
               )}
             </button>
-          </div> */}
+          </div>
         </div>
       </nav>
 
@@ -318,24 +318,24 @@ const Port: React.FC = () => {
             {/* Text Content - Left */}
             <div className="space-y-6">
               <div className="flex flex-col gap-4">
-                <span className="text-xs md:text-sm lg:text-md font-mono tracking-widest text-gray-500">
+                <span className="text-xs md:text-sm lg:text-md font-mono tracking-widest text-gray-600 dark:text-gray-500">
                   PORTFOLIO / 2025
                 </span>
                 <div className="flex flex-col py-2 lg:py-8">
-                  <span className="font-playfair font-extralight tracking-tighter text-5xl md:text-8xl text-white">MO AMIN</span>
-                  <span className="text-2xl md:text-4xl font-extralight text-gray-400">
+                  <span className="font-playfair font-extralight tracking-tighter text-5xl md:text-8xl text-neutral-900 dark:text-white">MO AMIN</span>
+                  <span className="text-2xl md:text-4xl font-extralight text-gray-700 dark:text-gray-400">
                     FRONTEND ENGINEER
                   </span>
                 </div>
               </div>
-              <p className="max-w-xl font-extralight tracking-normal text-neutral-400 text-lg md:text-xl lg:text-2xl leading-relaxed pt-4">
-                I'm a software engineer specializing in building <span className="text-foreground">robust</span> and{" "}
-                <span className="text-foreground">scalable</span> web pages. I also dabble in photography.
+              <p className="max-w-xl font-extralight tracking-normal text-neutral-700 dark:text-neutral-400 text-lg md:text-xl lg:text-2xl leading-relaxed pt-4">
+                I'm a software engineer specializing in building <span className="text-neutral-900 dark:text-foreground">robust</span> and{" "}
+                <span className="text-neutral-900 dark:text-foreground">scalable</span> web pages. I also dabble in photography.
                 {/* This year, I'm focused on expanding my portfolio with accessible, human-centered products. */}
               </p>
               <div className="pt-8 flex items-center gap-2">
                 <span className="inline-block w-1.5 h-1.5 rounded-full bg-green-600 animate-pulse"></span>
-                <span className="text-xs md:text-sm lg:text-md font-mono tracking-widest text-gray-500">AVAILABLE FOR WORK / NEW YORK</span>
+                <span className="text-xs md:text-sm lg:text-md font-mono tracking-widest text-gray-600 dark:text-gray-500">AVAILABLE FOR WORK / NEW YORK</span>
               </div>
             </div>
 
@@ -362,16 +362,16 @@ const Port: React.FC = () => {
           <div className="relative z-10">
             <div className="flex flex-col gap-4 mb-12">
               <div className="space-y-2">
-                <div className="text-sm font-mono text-gray-500">01 - ABOUT</div>
-                <h2 className="text-3xl sm:text-4xl font-playfair font-light text-white">ABOUT ME</h2>
+                <div className="text-sm font-mono text-gray-600 dark:text-gray-500">01 - ABOUT</div>
+                <h2 className="text-3xl sm:text-4xl font-playfair font-light text-neutral-900 dark:text-white">ABOUT ME</h2>
               </div>
             </div>
 
             <div className="flex flex-col gap-12">
               {/* Text Content - Top */}
-              <div className="space-y-6 font-extralight tracking-normal text-neutral-400 text-lg md:text-xl lg:text-2xl leading-relaxed">
+              <div className="space-y-6 font-extralight tracking-normal text-neutral-700 dark:text-neutral-400 text-lg md:text-xl lg:text-2xl leading-relaxed">
                 <p>
-                  With over <span className="text-foreground">5 years</span> of
+                  With over <span className="text-neutral-900 dark:text-foreground">5 years</span> of
                   experience, I've
                   worked on everything from complex distributed microservices to
                   monolithic SPAs. This diverse background has given me a
@@ -385,7 +385,7 @@ const Port: React.FC = () => {
                 <p>
                   Check out my{" "}
                   <Link
-                    className="text-white hover:underline"
+                    className="text-neutral-900 dark:text-white hover:underline"
                     href="https://www.youtube.com/@moamin.create"
                     target="_blank"
                   >
@@ -408,7 +408,7 @@ const Port: React.FC = () => {
                 <div className="absolute top-4 left-4 w-full aspect-video border border-gray-300/50 -z-0 transition-transform duration-300 group-hover:translate-x-1 group-hover:translate-y-1"></div>
               </div> */}
               <div className="space-y-4 mt-8 overflow-hidden">
-                <span className="text-sm font-mono text-gray-500">TECHNICAL ARSENAL</span>
+                <span className="text-sm font-mono text-gray-600 dark:text-gray-500">TECHNICAL ARSENAL</span>
                 <div className="relative h-12 flex items-center">
                   <motion.div
                     className="flex gap-8 whitespace-nowrap"
@@ -428,7 +428,7 @@ const Port: React.FC = () => {
                     {[...technologies, ...technologies].map((tech, idx) => (
                       <span
                         key={idx}
-                        className={`text-2xl md:text-3xl font-extralight ${idx % 2 === 0 ? "text-white" : "text-gray-400"
+                        className={`text-2xl md:text-3xl font-extralight ${idx % 2 === 0 ? "text-neutral-900 dark:text-white" : "text-gray-700 dark:text-gray-400"
                           }`}
                       >
                         {tech}
@@ -446,8 +446,8 @@ const Port: React.FC = () => {
           <div className="space-y-12 sm:space-y-16">
             <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
               <div className="space-y-2">
-                <div className="text-sm font-mono text-gray-500">02 - EXPERIENCE</div>
-                <h2 className="text-3xl sm:text-4xl font-playfair font-light text-white">SELECTED WORK</h2>
+                <div className="text-sm font-mono text-gray-600 dark:text-gray-500">02 - EXPERIENCE</div>
+                <h2 className="text-3xl sm:text-4xl font-playfair font-light text-neutral-900 dark:text-white">SELECTED WORK</h2>
               </div>
               <div className="hidden lg:block text-sm text-muted-foreground font-mono">2021 — 2025</div>
             </div>
@@ -489,13 +489,13 @@ const Port: React.FC = () => {
           <div className="relative z-10">
             <div className="flex flex-col gap-4 mb-12">
               <div className="space-y-2">
-                <div className="text-sm font-mono text-gray-500">03 - PHOTOGRAPHY</div>
-                <h2 className="text-3xl sm:text-4xl font-playfair font-light text-white">VISUAL STORIES</h2>
+                <div className="text-sm font-mono text-gray-600 dark:text-gray-500">03 - PHOTOGRAPHY</div>
+                <h2 className="text-3xl sm:text-4xl font-playfair font-light text-neutral-900 dark:text-white">VISUAL STORIES</h2>
               </div>
             </div>
 
             <div className="mb-12">
-              <p className="text-neutral-400 text-lg md:text-xl lg:text-2xl font-extralight tracking-normal text-neutral-400">
+              <p className="text-neutral-700 dark:text-neutral-400 text-lg md:text-xl lg:text-2xl font-extralight tracking-normal">
                 Capturing moments through my lens — a collection of architecture, nature, and portraits. Currently shooting on a Sony A7III.
               </p>
             </div>
@@ -598,12 +598,12 @@ const Port: React.FC = () => {
           <div className="relative z-10">
             <div className="flex flex-col gap-4 mb-12">
               <div className="space-y-2">
-                <div className="text-sm font-mono text-gray-500">04 - CONTACT</div>
-                <h2 className="text-3xl sm:text-4xl font-playfair font-light text-white">GET IN TOUCH</h2>
+                <div className="text-sm font-mono text-gray-600 dark:text-gray-500">04 - CONTACT</div>
+                <h2 className="text-3xl sm:text-4xl font-playfair font-light text-neutral-900 dark:text-white">GET IN TOUCH</h2>
               </div>
             </div>
 
-            <div className="space-y-6 font-extralight tracking-normal text-neutral-400 text-lg md:text-xl lg:text-2xl leading-relaxed">
+            <div className="space-y-6 font-extralight tracking-normal text-neutral-700 dark:text-neutral-400 text-lg md:text-xl lg:text-2xl leading-relaxed">
               <p>
                 I'm currently looking for new opportunities and my inbox is
                 always open. Whether you have a question or just want to say hi,
@@ -614,21 +614,21 @@ const Port: React.FC = () => {
                 <Link
                   href="mailto:mohamin.nyc@gmail.com"
                   target="_blank"
-                  className="text-md md:text-lg font-mono text-white hover:underline transition-all"
+                  className="text-md md:text-lg font-mono text-neutral-900 dark:text-white hover:underline transition-all"
                 >
                   Email
                 </Link>
                 <Link
                   href="https://github.com/moamin95"
                   target="_blank"
-                  className="md:text-lg font-mono text-white hover:underline transition-all"
+                  className="md:text-lg font-mono text-neutral-900 dark:text-white hover:underline transition-all"
                 >
                   GitHub
                 </Link>
                 <Link
                   href="https://www.linkedin.com/in/mohammed-amin-13a179215/"
                   target="_blank"
-                  className="md:text-lg font-mono text-white hover:underline transition-all"
+                  className="md:text-lg font-mono text-neutral-900 dark:text-white hover:underline transition-all"
                 >
                   LinkedIn
                 </Link>
@@ -667,11 +667,10 @@ const Port: React.FC = () => {
 
               {/* Image with hover footer - 2/3 width on desktop like before */}
               <div className="relative group max-w-4xl mx-auto">
-                <div className={`relative overflow-hidden rounded-lg ${
-                  selectedPhoto.orientation === "portrait"
-                    ? "aspect-[3/4]"
-                    : "aspect-video"
-                }`}>
+                <div className={`relative overflow-hidden rounded-lg ${selectedPhoto.orientation === "portrait"
+                  ? "aspect-[3/4]"
+                  : "aspect-video"
+                  }`}>
                   <Image
                     src={selectedPhoto.src}
                     alt={selectedPhoto.alt}
@@ -696,15 +695,15 @@ const Port: React.FC = () => {
       </AnimatePresence>
 
       {/* Footer */}
-      <footer className="text-center py-8 text-neutral-500 text-xs hover:text-gray-300 transition-colors cursor-default">
+      <footer className="text-center py-8 text-neutral-600 dark:text-neutral-500 text-xs hover:text-neutral-800 dark:hover:text-gray-300 transition-colors cursor-default">
         <p className="pb-20">Designed & Built by Mo Amin</p>
       </footer>
 
       {/* Email Sidebar */}
-      <div className="hidden xl:flex flex-col fixed bottom-0 right-12 space-y-6 text-neutral-400 after:content-[''] after:block after:w-[1px] after:h-24 after:bg-neutral-400 after:mx-auto after:mt-6">
+      <div className="hidden xl:flex flex-col fixed bottom-0 right-12 space-y-6 text-neutral-700 dark:text-neutral-400 after:content-[''] after:block after:w-[1px] after:h-24 after:bg-neutral-700 dark:after:bg-neutral-400 after:mx-auto after:mt-6">
         <a
           href="mailto:mohamin.nyc@gmail.com"
-          className="vertical-text text-xs font-lato tracking-wide font-light hover:text-gray-300 hover:-translate-y-1 transition-all"
+          className="vertical-text text-xs font-lato tracking-wide font-light hover:text-neutral-900 dark:hover:text-gray-300 hover:-translate-y-1 transition-all"
         >
           mohamin.nyc@gmail.com
         </a>
