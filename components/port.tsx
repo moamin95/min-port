@@ -311,7 +311,7 @@ const Port: React.FC = () => {
       {/* Hero Section - Full Width */}
       <section
         id="home"
-        className="min-h-screen flex flex-col justify-center pt-24 sm:pt-32 md:pt-20 relative"
+        className="min-h-screen flex flex-col justify-center pt-32 sm:pt-32 md:pt-20 relative"
       >
         <div className="max-w-6xl mx-auto px-6 w-full">
           <div className="grid lg:grid-cols-2 gap-12 items-center relative z-10">
@@ -350,7 +350,7 @@ const Port: React.FC = () => {
                   priority
                 />
               </div>
-              <div className="absolute top-4 left-4 w-full aspect-square border border-gray-300/50 -z-0 transition-transform duration-300 group-hover:translate-x-1 group-hover:translate-y-1"></div>
+              <div className="absolute top-4 left-4 w-full aspect-square border border-gray-500/70 dark:border-gray-300/50 -z-0 transition-transform duration-300 group-hover:translate-x-1 group-hover:translate-y-1"></div>
             </div>
           </div>
         </div>
@@ -395,23 +395,11 @@ const Port: React.FC = () => {
                 </p>
               </div>
 
-              {/* Image - Bottom */}
-              {/* <div className="relative group w-full">
-                <div className="relative z-10 w-full aspect-video rounded transition-all duration-300 overflow-hidden">
-                  <Image
-                    src="/images/orange.jpg"
-                    alt="Orange sunset"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <div className="absolute top-4 left-4 w-full aspect-video border border-gray-300/50 -z-0 transition-transform duration-300 group-hover:translate-x-1 group-hover:translate-y-1"></div>
-              </div> */}
               <div className="space-y-4 mt-8 overflow-hidden">
                 <span className="text-sm font-mono text-gray-600 dark:text-gray-500">TECHNICAL ARSENAL</span>
                 <div className="relative h-12 flex items-center">
                   <motion.div
-                    className="flex gap-8 whitespace-nowrap"
+                    className="flex gap-8 whitespace-nowrap items-center"
                     animate={{
                       x: ["0%", "-50%"],
                     }}
@@ -426,13 +414,15 @@ const Port: React.FC = () => {
                   >
                     {/* Render technologies twice for seamless loop */}
                     {[...technologies, ...technologies].map((tech, idx) => (
-                      <span
-                        key={idx}
-                        className={`text-2xl md:text-3xl font-extralight ${idx % 2 === 0 ? "text-neutral-900 dark:text-white" : "text-gray-700 dark:text-gray-400"
-                          }`}
-                      >
-                        {tech}
-                      </span>
+                      <React.Fragment key={idx}>
+                        <span
+                          className={`text-2xl md:text-3xl font-extralight ${idx % 2 === 0 ? "text-neutral-900 dark:text-white" : "text-gray-700 dark:text-gray-400"
+                            }`}
+                        >
+                          {tech}
+                        </span>
+                        <span className="text-gray-400 dark:text-gray-600">•</span>
+                      </React.Fragment>
                     ))}
                   </motion.div>
                 </div>
@@ -453,7 +443,7 @@ const Port: React.FC = () => {
             </div>
             <div className="space-y-8 sm:space-y-12">
               {jobs.map((job: Job, idx: number) => (
-                <div key={idx} className="group grid lg:grid-cols-12 gap-4 sm:gap-8 py-6 sm:py-8 border-b border-border/50 hover:border-border transition-colors duration-500">
+                <div key={idx} className="group grid lg:grid-cols-12 gap-4 sm:gap-8 py-6 sm:py-8 border-b border-gray-400/60 dark:border-border/50 hover:border-gray-600 dark:hover:border-border transition-colors duration-500">
                   <div className="lg:col-span-2">
                     <div className="text-xl sm:text-2xl font-light text-muted-foreground group-hover:text-foreground transition-colors duration-500">
                       {job.range}
@@ -462,7 +452,7 @@ const Port: React.FC = () => {
                   <div className="lg:col-span-6 space-y-3">
                     <div className="leading-6">
                       <h3 className="text-2xl md:text-3xl font-extralight text-foreground">{job.title}</h3>
-                      <div className="font-light font-lato text-lg md:text-xl text-muted-foreground">{job.company}</div>
+                      <div className="font-light font-lato text-xl md:text-2xl text-muted-foreground">{job.company}</div>
                     </div>
                     <p className="text-muted-foreground text-lato font-extralight tracking-normal leading-relaxed text-lg md:text-xl lg:text-2xl lg:max-w-xl">
                       {job.duties[0]}
@@ -472,7 +462,7 @@ const Port: React.FC = () => {
                     {job.tech.map((tech: string) => (
                       <span
                         key={tech}
-                        className="px-2 py-1 text-xs text-muted-foreground rounded group-hover:border-muted-foreground/50 transition-colors duration-500"
+                        className="px-2 py-1 text-xs font-mono text-muted-foreground rounded group-hover:border-muted-foreground/50 transition-colors duration-500"
                       >
                         {tech}
                       </span>
@@ -614,21 +604,21 @@ const Port: React.FC = () => {
                 <Link
                   href="mailto:mohamin.nyc@gmail.com"
                   target="_blank"
-                  className="text-md md:text-lg font-mono text-neutral-900 dark:text-white hover:underline transition-all"
+                  className="text-sm md:text-lg font-mono text-neutral-900 dark:text-white hover:underline transition-all"
                 >
                   Email
                 </Link>
                 <Link
                   href="https://github.com/moamin95"
                   target="_blank"
-                  className="md:text-lg font-mono text-neutral-900 dark:text-white hover:underline transition-all"
+                  className="text-sm md:text-lg font-mono text-neutral-900 dark:text-white hover:underline transition-all"
                 >
                   GitHub
                 </Link>
                 <Link
                   href="https://www.linkedin.com/in/mohammed-amin-13a179215/"
                   target="_blank"
-                  className="md:text-lg font-mono text-neutral-900 dark:text-white hover:underline transition-all"
+                  className="text-sm md:text-lg font-mono text-neutral-900 dark:text-white hover:underline transition-all"
                 >
                   LinkedIn
                 </Link>
