@@ -7,6 +7,8 @@ import {
   Code2,
   LucideIcon,
   X,
+  Sun,
+  Moon
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
@@ -247,7 +249,7 @@ const Port: React.FC = () => {
         className="fixed top-1/4 left-1/4 w-72 h-72 bg-blue-500/20 dark:bg-red-500/20 rounded-full blur-[100px] animate-pulse -z-10"
       />
       <div
-        className="fixed bottom-1/4 right-1/4 w-96 h-96 bg-green-500/15 dark:bg-orange-500/15 rounded-full blur-[100px] -z-10"
+        className="fixed bottom-1/4 right-1/4 w-96 h-96 bg-green-500/15 dark:bg-orange-500/15 rounded-full blur-[100px] animate-pulse -z-10"
       />
 
       {/* Bottom Scroll Fade */}
@@ -510,6 +512,7 @@ const Port: React.FC = () => {
                   alt={photos[0].alt}
                   fill
                   className="object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
+                  loading="eager"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
                   <span className="text-white text-sm font-mono tracking-widest">{photos[0].category}</span>
@@ -526,6 +529,7 @@ const Port: React.FC = () => {
                   alt={photos[1].alt}
                   fill
                   className="object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
+                  loading="eager"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
                   <span className="text-white text-sm font-mono tracking-widest">{photos[1].category}</span>
@@ -542,6 +546,7 @@ const Port: React.FC = () => {
                   alt={photos[2].alt}
                   fill
                   className="object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
+                  loading="eager"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-4">
                   <span className="text-white text-xs font-mono tracking-widest">{photos[2].category}</span>
@@ -558,6 +563,7 @@ const Port: React.FC = () => {
                   alt={photos[3].alt}
                   fill
                   className="object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
+                  loading="eager"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-4">
                   <span className="text-white text-xs font-mono tracking-widest">{photos[3].category}</span>
@@ -574,6 +580,7 @@ const Port: React.FC = () => {
                   alt={photos[4].alt}
                   fill
                   className="object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
+                  loading="eager"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-4">
                   <span className="text-white text-xs font-mono tracking-widest">{photos[4].category}</span>
