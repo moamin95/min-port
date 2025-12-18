@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
 import { technologies } from "@/lib/data";
 import { ChevronDown } from "lucide-react";
 
@@ -19,50 +18,27 @@ export default function TechStack() {
           aria-label={isRevealed ? "Hide tech stack" : "Show tech stack"}
         >
           {isRevealed ? "Hide" : "Show"}
-          <motion.div
-            animate={{ rotate: isRevealed ? 180 : 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            <ChevronDown size={16} />
-          </motion.div>
+          <ChevronDown
+            size={16}
+            className={`transition-transform duration-300 ${isRevealed ? "rotate-180" : ""}`}
+          />
         </button>
       </div>
 
-      <AnimatePresence>
-        {isRevealed && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="overflow-hidden"
-          >
-            <motion.div
-              className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 pt-4"
-              initial="hidden"
-              animate="show"
-              variants={{
-                show: { transition: { staggerChildren: 0.05 } }
-              }}
+      {isRevealed && (
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 pt-4">
+          {technologies.map((tech) => (
+            <div
+              key={tech}
+              className="px-4 py-3 bg-neutral-50 dark:bg-neutral-900/50 border border-neutral-200 dark:border-neutral-800 rounded hover:border-neutral-400 dark:hover:border-neutral-600 hover:bg-neutral-100 dark:hover:bg-neutral-900 transition-all duration-300 text-center"
             >
-              {technologies.map((tech) => (
-                <motion.div
-                  key={tech}
-                  variants={{
-                    hidden: { opacity: 0, y: 10 },
-                    show: { opacity: 1, y: 0 }
-                  }}
-                  className="px-4 py-3 bg-neutral-50 dark:bg-neutral-900/50 border border-neutral-200 dark:border-neutral-800 rounded hover:border-neutral-400 dark:hover:border-neutral-600 hover:bg-neutral-100 dark:hover:bg-neutral-900 transition-all duration-300 text-center"
-                >
-                  <span className="text-sm font-mono text-neutral-900 dark:text-neutral-100">
-                    {tech}
-                  </span>
-                </motion.div>
-              ))}
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+              <span className="text-sm font-mono text-neutral-900 dark:text-neutral-100">
+                {tech}
+              </span>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
