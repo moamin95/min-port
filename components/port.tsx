@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 import Image from "next/image";
@@ -11,6 +11,7 @@ import {
   Moon
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface Job {
   title: string;
@@ -54,7 +55,7 @@ const jobs: Job[] = [
     duties: [
       "Develop React-based micro-frontend modules using a proprietary Node.js orchestration framework.",
     ],
-    tech: ["Node JS", "React", "TanStack", "GHA"],
+    tech: ["Node JS", "React", "TanStack", "Tailwind"],
   },
   {
     title: "Software Engineer",
@@ -150,6 +151,8 @@ const Port: React.FC = () => {
   const [expandedJobs, setExpandedJobs] = useState<Set<number>>(new Set());
   const [showScrollIndicator, setShowScrollIndicator] = useState<boolean>(true);
   const [selectedPhoto, setSelectedPhoto] = useState<PhotoMetadata | null>(null);
+  const [heroImageLoaded, setHeroImageLoaded] = useState<boolean>(false);
+  const [galleryImagesLoaded, setGalleryImagesLoaded] = useState<Record<number, boolean>>({});
   const { theme, setTheme } = useTheme();
 
   const technologies = [
@@ -299,14 +302,14 @@ const Port: React.FC = () => {
       </nav>
 
       {/* Left Sidebar Navigation - Desktop Only (1024px+) */}
-      <aside className="hidden xl:flex fixed left-8 top-1/2 -translate-y-1/2 z-40">
+      {/* <aside className="hidden xl:flex fixed left-8 top-1/2 -translate-y-1/2 z-40">
         <nav className="flex flex-col space-y-8">
           <NavLink to="about" label="ABOUT" number="01" />
           <NavLink to="experience" label="EXPERIENCE" number="02" />
           <NavLink to="photography" label="PHOTOGRAPHY" number="03" />
           <NavLink to="contact" label="CONTACT" number="04" />
         </nav>
-      </aside>
+      </aside> */}
 
       {/* Hero Section - Full Width */}
       <section
@@ -342,12 +345,18 @@ const Port: React.FC = () => {
             {/* Image - Right */}
             <div className="relative group border">
               <div className="relative z-10 w-full aspect-square rounded transition-all duration-300 overflow-hidden">
+                {!heroImageLoaded && (
+                  <Skeleton className="absolute inset-0 w-full h-full" />
+                )}
                 <Image
-                  src="/moavatar.webp"
+                  src="/images/mopic.webp"
                   alt="Mo Amin"
                   fill
-                  className="object-cover"
+                  className={`object-cover dark:grayscale hover:filter-none transition-opacity duration-500 ${
+                    heroImageLoaded ? "opacity-100" : "opacity-0"
+                  }`}
                   priority
+                  onLoad={() => setHeroImageLoaded(true)}
                 />
               </div>
               <div className="absolute top-4 left-4 w-full aspect-square border border-gray-500/70 dark:border-gray-300/50 -z-0 transition-transform duration-300 group-hover:translate-x-1 group-hover:translate-y-1"></div>
@@ -427,6 +436,7 @@ const Port: React.FC = () => {
                   </motion.div>
                 </div>
               </div>
+
             </div>
           </div>
         </section>
@@ -497,12 +507,18 @@ const Port: React.FC = () => {
                 onClick={() => setSelectedPhoto(photos[0])}
                 className="col-span-2 row-span-2 relative group overflow-hidden rounded-lg cursor-pointer"
               >
+                {!galleryImagesLoaded[0] && (
+                  <Skeleton className="absolute inset-0 w-full h-full" />
+                )}
                 <Image
                   src={photos[0].src}
                   alt={photos[0].alt}
                   fill
-                  className="object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
+                  className={`object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110 ${
+                    galleryImagesLoaded[0] ? "opacity-100" : "opacity-0"
+                  }`}
                   loading="eager"
+                  onLoad={() => setGalleryImagesLoaded(prev => ({ ...prev, 0: true }))}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
                   <span className="text-white text-sm font-mono tracking-widest">{photos[0].category}</span>
@@ -514,12 +530,18 @@ const Port: React.FC = () => {
                 onClick={() => setSelectedPhoto(photos[1])}
                 className="col-span-1 row-span-2 relative group overflow-hidden rounded-lg cursor-pointer"
               >
+                {!galleryImagesLoaded[1] && (
+                  <Skeleton className="absolute inset-0 w-full h-full" />
+                )}
                 <Image
                   src={photos[1].src}
                   alt={photos[1].alt}
                   fill
-                  className="object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
+                  className={`object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110 ${
+                    galleryImagesLoaded[1] ? "opacity-100" : "opacity-0"
+                  }`}
                   loading="eager"
+                  onLoad={() => setGalleryImagesLoaded(prev => ({ ...prev, 1: true }))}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
                   <span className="text-white text-sm font-mono tracking-widest">{photos[1].category}</span>
@@ -531,12 +553,18 @@ const Port: React.FC = () => {
                 onClick={() => setSelectedPhoto(photos[2])}
                 className="col-span-1 row-span-1 relative group overflow-hidden rounded-lg cursor-pointer"
               >
+                {!galleryImagesLoaded[2] && (
+                  <Skeleton className="absolute inset-0 w-full h-full" />
+                )}
                 <Image
                   src={photos[2].src}
                   alt={photos[2].alt}
                   fill
-                  className="object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
+                  className={`object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110 ${
+                    galleryImagesLoaded[2] ? "opacity-100" : "opacity-0"
+                  }`}
                   loading="eager"
+                  onLoad={() => setGalleryImagesLoaded(prev => ({ ...prev, 2: true }))}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-4">
                   <span className="text-white text-xs font-mono tracking-widest">{photos[2].category}</span>
@@ -548,12 +576,18 @@ const Port: React.FC = () => {
                 onClick={() => setSelectedPhoto(photos[3])}
                 className="col-span-1 row-span-1 relative group overflow-hidden rounded-lg cursor-pointer"
               >
+                {!galleryImagesLoaded[3] && (
+                  <Skeleton className="absolute inset-0 w-full h-full" />
+                )}
                 <Image
                   src={photos[3].src}
                   alt={photos[3].alt}
                   fill
-                  className="object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
+                  className={`object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110 ${
+                    galleryImagesLoaded[3] ? "opacity-100" : "opacity-0"
+                  }`}
                   loading="eager"
+                  onLoad={() => setGalleryImagesLoaded(prev => ({ ...prev, 3: true }))}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-4">
                   <span className="text-white text-xs font-mono tracking-widest">{photos[3].category}</span>
@@ -565,12 +599,18 @@ const Port: React.FC = () => {
                 onClick={() => setSelectedPhoto(photos[4])}
                 className="col-span-2 row-span-1 relative group overflow-hidden rounded-lg cursor-pointer"
               >
+                {!galleryImagesLoaded[4] && (
+                  <Skeleton className="absolute inset-0 w-full h-full" />
+                )}
                 <Image
                   src={photos[4].src}
                   alt={photos[4].alt}
                   fill
-                  className="object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
+                  className={`object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110 ${
+                    galleryImagesLoaded[4] ? "opacity-100" : "opacity-0"
+                  }`}
                   loading="eager"
+                  onLoad={() => setGalleryImagesLoaded(prev => ({ ...prev, 4: true }))}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-4">
                   <span className="text-white text-xs font-mono tracking-widest">{photos[4].category}</span>
