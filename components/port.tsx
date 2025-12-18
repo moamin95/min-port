@@ -1,148 +1,16 @@
 "use client";
-import React, { useState, useEffect, Suspense } from "react";
+import React, { useState, useEffect, lazy, Suspense } from "react";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 import Image from "next/image";
-import {
-  Code2,
-  LucideIcon,
-  X,
-  Sun,
-  Moon
-} from "lucide-react";
-import { motion, AnimatePresence } from "motion/react";
-import { Skeleton } from "@/components/ui/skeleton";
+import { Sun, Moon } from "lucide-react";
+import { jobs, photos, type PhotoMetadata, type Job } from "@/lib/data";
 
-interface Job {
-  title: string;
-  company: string;
-  range: string;
-  duties: string[];
-  tech: string[];
-}
-
-interface Project {
-  title: string;
-  desc: string;
-  tech: string[];
-  icon: LucideIcon;
-  image?: string;
-  video?: string;
-  videoWebm?: string;
-  githubLink: string;
-  websiteLink: string;
-}
-
-interface PhotoMetadata {
-  src: string;
-  alt: string;
-  category: string;
-  year: string;
-  aperture: string;
-  focalLength: string;
-  camera: string;
-  orientation: string;
-}
+// Lazy load heavy components
+const PhotoModal = lazy(() => import("@/components/PhotoModal"));
+const TechStack = lazy(() => import("@/components/TechStack"));
 
 type Section = "home" | "about" | "experience" | "photography" | "projects" | "contact";
-
-// Data
-const jobs: Job[] = [
-  {
-    title: "Front End Engineer",
-    company: "American Express",
-    range: "2024 - Present",
-    duties: [
-      "Develop React-based micro-frontend modules using a proprietary Node.js orchestration framework.",
-    ],
-    tech: ["Node JS", "React", "TanStack", "Tailwind"],
-  },
-  {
-    title: "Software Engineer",
-    company: "CVS Health",
-    range: "2022 - 2024",
-    duties: [
-      "Built scalable, reusable React and Stencil.js components for e-commerce payment flows."
-    ],
-    tech: ["Next JS", "Angular", "GraphQL", "Jenkins"],
-  },
-  {
-    title: "Web Engineer",
-    company: "Merkle",
-    range: "2021 - 2022",
-    duties: [
-      "Designed and developed an Express.js reverse-proxy server.",
-    ],
-    tech: ["React", "Express", "MySQL", "AWS"],
-  },
-];
-
-const projects: Project[] = [
-  {
-    title: "trackr",
-    desc: "A comprehensive financial management platform that combines modern design with powerful functionality.",
-    tech: ["Next JS", "React", "shadcn/ui", "Recharts", "TanStack"],
-    icon: Code2,
-    video: "/trackr.mp4",
-    videoWebm: "/trackr.webm",
-    image: "/trackr.png",
-    githubLink: "https://github.com/moamin95/trackr",
-    websiteLink: "https://trackr-wheat.vercel.app/",
-  },
-];
-
-const photos: PhotoMetadata[] = [
-  {
-    src: "/images/cathedral.jpg",
-    alt: "Cathedral architecture",
-    category: "ARCHITECTURE",
-    year: "2025",
-    aperture: "f/2.8",
-    focalLength: "35mm",
-    camera: "Sony A7III",
-    orientation: "portrait"
-  },
-  {
-    src: "/images/cave.jpg",
-    alt: "Cave exploration",
-    category: "NATURE",
-    year: "2025",
-    aperture: "f/4.0",
-    focalLength: "24mm",
-    camera: "Sony A6700",
-    orientation: "portrait"
-  },
-  {
-    src: "/images/orange.jpg",
-    alt: "Orange sunset",
-    category: "STREET",
-    year: "2025",
-    aperture: "f/1.8",
-    focalLength: "50mm",
-    camera: "Sony A7III",
-    orientation: "portrait"
-  },
-  {
-    src: "/images/doggo.jpg",
-    alt: "Dog portrait",
-    category: "PORTRAIT",
-    year: "2025",
-    aperture: "f/1.4",
-    focalLength: "85mm",
-    camera: "Sony A6700",
-    orientation: "portrait"
-  },
-  {
-    src: "/images/prity2.jpg",
-    alt: "Portrait work",
-    category: "PEOPLE",
-    year: "2025",
-    aperture: "f/2.0",
-    focalLength: "50mm",
-    camera: "Sony A7III",
-    orientation: "portrait"
-  },
-];
 
 const Port: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
@@ -151,22 +19,7 @@ const Port: React.FC = () => {
   const [expandedJobs, setExpandedJobs] = useState<Set<number>>(new Set());
   const [showScrollIndicator, setShowScrollIndicator] = useState<boolean>(true);
   const [selectedPhoto, setSelectedPhoto] = useState<PhotoMetadata | null>(null);
-  const [heroImageLoaded, setHeroImageLoaded] = useState<boolean>(false);
-  const [galleryImagesLoaded, setGalleryImagesLoaded] = useState<Record<number, boolean>>({});
   const { theme, setTheme } = useTheme();
-
-  const technologies = [
-    "React",
-    "Node.js",
-    "Next.js",
-    "JavaScript",
-    "TypeScript",
-    "Tailwind CSS",
-    "Figma",
-    "Redux",
-    "TanStack Query",
-    "PostgreSQL",
-  ];
 
   // Avoid hydration mismatch
   useEffect(() => {
@@ -225,22 +78,6 @@ const Port: React.FC = () => {
     }
   };
 
-  const NavLink: React.FC<{ to: Section; label: string; number: string }> = ({
-    to,
-    label,
-    number,
-  }) => (
-    <button
-      onClick={() => scrollToSection(to)}
-      className="group flex items-center space-x-2 text-sm font-medium transition-all duration-300 ease-in-out text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white"
-    >
-      <span className="text-xs text-gray-600/50 dark:text-gray-300/50 opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100">
-        {number}
-      </span>
-      <span className="text-sm font-mono font-extralight tracking-tighter">{label}</span>
-    </button>
-  );
-
   return (
     <div
       className="min-h-screen text-neutral-800 dark:text-neutral-200 selection:bg-gray-300 dark:selection:bg-gray-700 selection:text-gray-900 dark:selection:text-gray-100 font-sans transition-colors"
@@ -249,10 +86,10 @@ const Port: React.FC = () => {
 
       {/* Glowing Orbs */}
       <div
-        className="fixed top-1/4 left-1/4 w-72 h-72 bg-blue-500/50 dark:bg-red-500/20 rounded-full blur-[100px] animate-pulse -z-10"
+        className="fixed top-1/4 left-1/4 w-72 h-72 bg-blue-500/50 dark:bg-red-500/20 rounded-full blur-[100px]  -z-10"
       />
       <div
-        className="fixed bottom-1/4 right-1/4 w-96 h-96 bg-green-500/45 dark:bg-orange-500/15 rounded-full blur-[100px] animate-pulse -z-10"
+        className="fixed bottom-1/4 right-1/4 w-96 h-96 bg-green-500/45 dark:bg-orange-500/15 rounded-full blur-[100px]  -z-10"
       />
 
       {/* Bottom Scroll Fade */}
@@ -345,18 +182,14 @@ const Port: React.FC = () => {
             {/* Image - Right */}
             <div className="relative group border">
               <div className="relative z-10 w-full aspect-square rounded transition-all duration-300 overflow-hidden">
-                {!heroImageLoaded && (
-                  <Skeleton className="absolute inset-0 w-full h-full" />
-                )}
                 <Image
                   src="/images/mopic.webp"
                   alt="Mo Amin"
                   fill
-                  className={`object-cover dark:grayscale hover:filter-none transition-opacity duration-500 ${
-                    heroImageLoaded ? "opacity-100" : "opacity-0"
-                  }`}
-                  priority
-                  onLoad={() => setHeroImageLoaded(true)}
+                  className="object-cover dark:grayscale hover:filter-none"
+                  priority={true} // High priority
+                  fetchPriority="high"
+                  sizes="(max-width: 768px) 100vw, 50vw"
                 />
               </div>
               <div className="absolute top-4 left-4 w-full aspect-square border border-gray-500/70 dark:border-gray-300/50 -z-0 transition-transform duration-300 group-hover:translate-x-1 group-hover:translate-y-1"></div>
@@ -404,38 +237,9 @@ const Port: React.FC = () => {
                 </p> */}
               </div>
 
-              <div className="space-y-4 mt-8 overflow-hidden">
-                <span className="text-sm font-mono text-gray-600 dark:text-gray-500">TECHNICAL ARSENAL</span>
-                <div className="relative h-12 flex items-center">
-                  <motion.div
-                    className="flex gap-8 whitespace-nowrap items-center"
-                    animate={{
-                      x: ["0%", "-50%"],
-                    }}
-                    transition={{
-                      x: {
-                        repeat: Infinity,
-                        repeatType: "loop",
-                        duration: 30,
-                        ease: "linear",
-                      },
-                    }}
-                  >
-                    {/* Render technologies twice for seamless loop */}
-                    {[...technologies, ...technologies].map((tech, idx) => (
-                      <React.Fragment key={idx}>
-                        <span
-                          className={`text-2xl md:text-3xl font-extralight ${idx % 2 === 0 ? "text-neutral-900 dark:text-white" : "text-gray-700 dark:text-gray-400"
-                            }`}
-                        >
-                          {tech}
-                        </span>
-                        <span className="text-gray-400 dark:text-gray-600">•</span>
-                      </React.Fragment>
-                    ))}
-                  </motion.div>
-                </div>
-              </div>
+              <Suspense fallback={<div className="h-20" />}>
+                <TechStack />
+              </Suspense>
 
             </div>
           </div>
@@ -462,7 +266,7 @@ const Port: React.FC = () => {
                   <div className="lg:col-span-6 space-y-3">
                     <div className="leading-6">
                       <h3 className="text-2xl md:text-3xl font-extralight text-foreground">{job.title}</h3>
-                      <div className="font-light font-lato text-xl md:text-2xl text-muted-foreground">{job.company}</div>
+                      <div className="font-light text-xl md:text-2xl text-muted-foreground">{job.company}</div>
                     </div>
                     <p className="text-muted-foreground text-lato font-extralight tracking-normal leading-relaxed text-lg md:text-xl lg:text-2xl lg:max-w-xl">
                       {job.duties[0]}
@@ -507,18 +311,12 @@ const Port: React.FC = () => {
                 onClick={() => setSelectedPhoto(photos[0])}
                 className="col-span-2 row-span-2 relative group overflow-hidden rounded-lg cursor-pointer"
               >
-                {!galleryImagesLoaded[0] && (
-                  <Skeleton className="absolute inset-0 w-full h-full" />
-                )}
                 <Image
                   src={photos[0].src}
                   alt={photos[0].alt}
                   fill
-                  className={`object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110 ${
-                    galleryImagesLoaded[0] ? "opacity-100" : "opacity-0"
-                  }`}
-                  loading="eager"
-                  onLoad={() => setGalleryImagesLoaded(prev => ({ ...prev, 0: true }))}
+                  className="object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
+                  loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
                   <span className="text-white text-sm font-mono tracking-widest">{photos[0].category}</span>
@@ -530,18 +328,12 @@ const Port: React.FC = () => {
                 onClick={() => setSelectedPhoto(photos[1])}
                 className="col-span-1 row-span-2 relative group overflow-hidden rounded-lg cursor-pointer"
               >
-                {!galleryImagesLoaded[1] && (
-                  <Skeleton className="absolute inset-0 w-full h-full" />
-                )}
                 <Image
                   src={photos[1].src}
                   alt={photos[1].alt}
                   fill
-                  className={`object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110 ${
-                    galleryImagesLoaded[1] ? "opacity-100" : "opacity-0"
-                  }`}
-                  loading="eager"
-                  onLoad={() => setGalleryImagesLoaded(prev => ({ ...prev, 1: true }))}
+                  className="object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
+                  loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
                   <span className="text-white text-sm font-mono tracking-widest">{photos[1].category}</span>
@@ -553,18 +345,12 @@ const Port: React.FC = () => {
                 onClick={() => setSelectedPhoto(photos[2])}
                 className="col-span-1 row-span-1 relative group overflow-hidden rounded-lg cursor-pointer"
               >
-                {!galleryImagesLoaded[2] && (
-                  <Skeleton className="absolute inset-0 w-full h-full" />
-                )}
                 <Image
                   src={photos[2].src}
                   alt={photos[2].alt}
                   fill
-                  className={`object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110 ${
-                    galleryImagesLoaded[2] ? "opacity-100" : "opacity-0"
-                  }`}
-                  loading="eager"
-                  onLoad={() => setGalleryImagesLoaded(prev => ({ ...prev, 2: true }))}
+                  className="object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
+                  loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-4">
                   <span className="text-white text-xs font-mono tracking-widest">{photos[2].category}</span>
@@ -576,18 +362,12 @@ const Port: React.FC = () => {
                 onClick={() => setSelectedPhoto(photos[3])}
                 className="col-span-1 row-span-1 relative group overflow-hidden rounded-lg cursor-pointer"
               >
-                {!galleryImagesLoaded[3] && (
-                  <Skeleton className="absolute inset-0 w-full h-full" />
-                )}
                 <Image
                   src={photos[3].src}
                   alt={photos[3].alt}
                   fill
-                  className={`object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110 ${
-                    galleryImagesLoaded[3] ? "opacity-100" : "opacity-0"
-                  }`}
-                  loading="eager"
-                  onLoad={() => setGalleryImagesLoaded(prev => ({ ...prev, 3: true }))}
+                  className="object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
+                  loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-4">
                   <span className="text-white text-xs font-mono tracking-widest">{photos[3].category}</span>
@@ -599,18 +379,12 @@ const Port: React.FC = () => {
                 onClick={() => setSelectedPhoto(photos[4])}
                 className="col-span-2 row-span-1 relative group overflow-hidden rounded-lg cursor-pointer"
               >
-                {!galleryImagesLoaded[4] && (
-                  <Skeleton className="absolute inset-0 w-full h-full" />
-                )}
                 <Image
                   src={photos[4].src}
                   alt={photos[4].alt}
                   fill
-                  className={`object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110 ${
-                    galleryImagesLoaded[4] ? "opacity-100" : "opacity-0"
-                  }`}
-                  loading="eager"
-                  onLoad={() => setGalleryImagesLoaded(prev => ({ ...prev, 4: true }))}
+                  className="object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
+                  loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-4">
                   <span className="text-white text-xs font-mono tracking-widest">{photos[4].category}</span>
@@ -668,61 +442,15 @@ const Port: React.FC = () => {
         </section>
       </main>
 
-      {/* Photo Modal */}
-      <AnimatePresence>
-        {selectedPhoto && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setSelectedPhoto(null)}
-            className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4 cursor-pointer"
-          >
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2, ease: "easeOut" }}
-              onClick={(e) => e.stopPropagation()}
-              className="relative max-w-6xl w-full cursor-default"
-            >
-              {/* Close button */}
-              <button
-                onClick={() => setSelectedPhoto(null)}
-                className="absolute -top-12 right-0 text-white hover:text-gray-300 transition-colors z-10"
-                aria-label="Close modal"
-              >
-                <X size={32} />
-              </button>
-
-              {/* Image with hover footer - 2/3 width on desktop like before */}
-              <div className="relative group max-w-4xl mx-auto">
-                <div className={`relative overflow-hidden rounded-lg ${selectedPhoto.orientation === "portrait"
-                  ? "aspect-[3/4]"
-                  : "aspect-video"
-                  }`}>
-                  <Image
-                    src={selectedPhoto.src}
-                    alt={selectedPhoto.alt}
-                    fill
-                    className="object-cover"
-                    priority
-                  />
-
-                  {/* Footer overlay on hover */}
-                  <div className="absolute bottom-0 left-0 right-0 bg-black/80 backdrop-blur-sm p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="flex justify-between items-center text-xs md:text-sm font-mono text-gray-300">
-                      <span>{selectedPhoto.aperture}</span>
-                      <span>{selectedPhoto.focalLength}</span>
-                      <span>{selectedPhoto.camera}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Photo Modal - Lazy loaded */}
+      {selectedPhoto && (
+        <Suspense fallback={null}>
+          <PhotoModal
+            selectedPhoto={selectedPhoto}
+            onClose={() => setSelectedPhoto(null)}
+          />
+        </Suspense>
+      )}
 
       {/* Footer */}
       <footer className="text-center py-8 text-neutral-600 dark:text-neutral-500 text-xs hover:text-neutral-800 dark:hover:text-gray-300 transition-colors cursor-default">
@@ -733,7 +461,7 @@ const Port: React.FC = () => {
       <div className="hidden xl:flex flex-col fixed bottom-0 right-12 space-y-6 text-neutral-700 dark:text-neutral-400 after:content-[''] after:block after:w-[1px] after:h-24 after:bg-neutral-700 dark:after:bg-neutral-400 after:mx-auto after:mt-6">
         <a
           href="mailto:mohamin.nyc@gmail.com"
-          className="vertical-text text-xs font-lato tracking-wide font-light hover:text-neutral-900 dark:hover:text-gray-300 hover:-translate-y-1 transition-all"
+          className="vertical-text text-xs tracking-wide font-light hover:text-neutral-900 dark:hover:text-gray-300 hover:-translate-y-1 transition-all"
         >
           mohamin.nyc@gmail.com
         </a>

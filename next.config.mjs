@@ -9,15 +9,17 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    unoptimized: true,
+    // 1. REMOVE 'unoptimized: true'
+    // 2. Set the allowed formats (AVIF is ~20% smaller than WebP)
+    formats: ['image/avif', 'image/webp'],
+    // 3. Set device sizes to help Next.js generate responsive variants
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920],
+    // 4. Optional: Increase the TTL for the cache (default is 60 seconds)
+    minimumCacheTTL: 60,
   },
-  // Configure `pageExtensions` to include MDX files
   pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
 }
 
-const withMDX = createMDX({
-  // Add markdown plugins here, as desired
-})
+const withMDX = createMDX({})
 
-// Merge MDX config with Next.js config
 export default withMDX(nextConfig)
