@@ -31,24 +31,31 @@ export interface PhotoMetadata {
   orientation: string;
 }
 
+export interface Achievement {
+  title: string;
+  company: string;
+  description: string;
+  year?: string;
+}
+
 export const jobs: Job[] = [
   {
-    title: "Front End Engineer",
+    title: "Software Engineer",
     company: "American Express",
     range: "2024 - Present",
     duties: [
-      "Develop React-based micro-frontend modules using a proprietary Node.js orchestration framework.",
+      "Develop React-based micro-frontend modules using a proprietary Node.Js orchestration framework.",
     ],
-    tech: ["Node JS", "React", "TanStack", "Tailwind"],
+    tech: ["Node.Js", "React", "TanStack", "Tailwind"],
   },
   {
     title: "Software Engineer",
     company: "CVS Health",
     range: "2022 - 2024",
     duties: [
-      "Built scalable, reusable React and Stencil.js components for e-commerce payment flows."
+      "Built scalable, reusable React and Next.Js components for e-commerce payment flows."
     ],
-    tech: ["Next JS", "Angular", "GraphQL", "Jenkins"],
+    tech: ["Next.Js", "Angular", "GraphQL", "Jenkins"],
   },
   {
     title: "Web Engineer",
@@ -65,7 +72,7 @@ export const projects: Project[] = [
   {
     title: "trackr",
     desc: "A comprehensive financial management platform that combines modern design with powerful functionality.",
-    tech: ["Next JS", "React", "shadcn/ui", "Recharts", "TanStack"],
+    tech: ["Next.Js", "React", "shadcn/ui", "Recharts", "TanStack"],
     icon: Code2,
     video: "/trackr.mp4",
     videoWebm: "/trackr.webm",
@@ -130,8 +137,8 @@ export const photos: PhotoMetadata[] = [
 
 export const technologies = [
   "React",
-  "Node.js",
-  "Next.js",
+  "Node.Js",
+  "Next.Js",
   "JavaScript",
   "TypeScript",
   "Tailwind CSS",
@@ -139,4 +146,25 @@ export const technologies = [
   "Redux",
   "TanStack Query",
   "PostgreSQL",
+];
+
+export const achievements: Achievement[] = [
+  {
+    title: "React Server Components",
+    company: "American Express",
+    description: "Refactored legacy React components to Version 19, implementing React Server Components (RSC) and Server Actions. Optimized performance and security by offloading data fetching and sensitive form logic to the server, significantly reducing client-side JavaScript bundles.",
+    year: "2025"
+  },
+  {
+    title: "Greenfield Next.Js Pages",
+    company: "CVS",
+    description: "Led 0 -> 1 development of secure payment modules using Next.Js Page Router. Implemented SSR to ensure high performance and SEO, while maintaining strict data validation standards for high-stakes payment transactions.",
+    year: "2024"
+  },
+  {
+    title: "Admin Portal",
+    company: "Merkle",
+    description: "Architected a centralized Admin Portal, designing a MySQL schema for user management and an Express.js Reverse Proxy. Streamlined internal workflows and secured backend endpoints through a unified, authenticated entry point.",
+    year: "2022"
+  },
 ];

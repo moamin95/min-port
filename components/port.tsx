@@ -4,7 +4,7 @@ import { useTheme } from "next-themes";
 import Link from "next/link";
 import Image from "next/image";
 import { Sun, Moon } from "lucide-react";
-import { jobs, photos, type PhotoMetadata, type Job } from "@/lib/data";
+import { jobs, photos, achievements, type PhotoMetadata, type Job, type Achievement } from "@/lib/data";
 
 // Lazy load heavy components
 const PhotoModal = lazy(() => import("@/components/PhotoModal"));
@@ -164,7 +164,7 @@ const Port: React.FC = () => {
                 <div className="flex flex-col py-2 lg:py-8">
                   <span className="font-playfair font-extralight tracking-tighter text-5xl md:text-8xl text-neutral-900 dark:text-white">MO AMIN</span>
                   <span className="text-2xl md:text-4xl font-extralight text-gray-700 dark:text-gray-400">
-                    FRONTEND ENGINEER
+                    FULLSTACK ENGINEER
                   </span>
                 </div>
               </div>
@@ -240,6 +240,42 @@ const Port: React.FC = () => {
               <Suspense fallback={<div className="h-20" />}>
                 <TechStack />
               </Suspense>
+
+              {/* Notable Achievements */}
+              <div className="space-y-6 mt-16">
+                <h3 className="text-xl font-mono text-gray-600 dark:text-gray-500 uppercase tracking-widest">
+                  Notable Achievements
+                </h3>
+                <div className="space-y-6">
+                  {achievements.map((achievement: Achievement, idx: number) => (
+                    <div
+                      key={idx}
+                      className="group border-l-2 border-neutral-300 dark:border-neutral-700 hover:border-neutral-500 dark:hover:border-neutral-500 pl-6 py-2 transition-colors duration-300"
+                    >
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="flex-1 space-y-2">
+                          <div className="flex flex-col sm:flex-row sm:items-baseline sm:gap-3">
+                            <h4 className="text-xl md:text-2xl font-light text-neutral-900 dark:text-white">
+                              {achievement.title}
+                            </h4>
+                            <span className="text-sm md:text-base font-mono text-muted-foreground">
+                              @ {achievement.company}
+                            </span>
+                          </div>
+                          <p className="text-neutral-700 dark:text-neutral-400 font-light leading-relaxed">
+                            {achievement.description}
+                          </p>
+                        </div>
+                        {achievement.year && (
+                          <span className="text-sm font-mono text-muted-foreground shrink-0">
+                            {achievement.year}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
 
             </div>
           </div>
