@@ -93,7 +93,7 @@ const Port: React.FC = () => {
       />
 
       {/* Bottom Scroll Fade */}
-      <div className="fixed bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background via-background/80 to-transparent pointer-events-none z-40">
+      <div className="hidden lg:flex fixed bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background via-background/80 to-transparent pointer-events-none z-40">
         {showScrollIndicator && (
           <div className="absolute inset-0 flex items-center justify-center">
             <span className="text-neutral-600 dark:text-muted-foreground text-sm font-mono tracking-widest animate-bounce">
@@ -186,7 +186,7 @@ const Port: React.FC = () => {
                   src="/images/mopic.webp"
                   alt="Mo Amin"
                   fill
-                  className="object-cover dark:grayscale hover:filter-none"
+                  className="object-cover dark:grayscale group-hover:filter-none transition-all duration-300"
                   priority={true} // High priority
                   fetchPriority="high"
                   sizes="(max-width: 768px) 100vw, 50vw"
