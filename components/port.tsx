@@ -4,13 +4,26 @@ import { useTheme } from "next-themes";
 import Link from "next/link";
 import Image from "next/image";
 import { Sun, Moon } from "lucide-react";
-import { jobs, photos, achievements, type PhotoMetadata, type Job, type Achievement } from "@/lib/data";
+import {
+  jobs,
+  photos,
+  achievements,
+  type PhotoMetadata,
+  type Job,
+  type Achievement,
+} from "@/lib/data";
 
 // Lazy load heavy components
 const PhotoModal = lazy(() => import("@/components/PhotoModal"));
 const TechStack = lazy(() => import("@/components/TechStack"));
 
-type Section = "home" | "about" | "experience" | "photography" | "projects" | "contact";
+type Section =
+  | "home"
+  | "about"
+  | "experience"
+  | "photography"
+  | "projects"
+  | "contact";
 
 const Port: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
@@ -18,7 +31,9 @@ const Port: React.FC = () => {
   const [mounted, setMounted] = useState<boolean>(false);
   const [expandedJobs, setExpandedJobs] = useState<Set<number>>(new Set());
   const [showScrollIndicator, setShowScrollIndicator] = useState<boolean>(true);
-  const [selectedPhoto, setSelectedPhoto] = useState<PhotoMetadata | null>(null);
+  const [selectedPhoto, setSelectedPhoto] = useState<PhotoMetadata | null>(
+    null
+  );
   const { theme, setTheme } = useTheme();
 
   // Avoid hydration mismatch
@@ -40,7 +55,9 @@ const Port: React.FC = () => {
       }
 
       // Check if we're at the bottom of the page
-      const isBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 10;
+      const isBottom =
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight - 10;
 
       if (isBottom) {
         setActiveSection("contact");
@@ -83,14 +100,9 @@ const Port: React.FC = () => {
       className="min-h-screen text-neutral-800 dark:text-neutral-200 selection:bg-gray-300 dark:selection:bg-gray-700 selection:text-gray-900 dark:selection:text-gray-100 font-sans transition-colors"
       suppressHydrationWarning
     >
-
       {/* Glowing Orbs */}
-      <div
-        className="fixed top-1/4 left-1/4 w-72 h-72 bg-blue-500/50 dark:bg-red-500/20 rounded-full blur-[100px]  -z-10"
-      />
-      <div
-        className="fixed bottom-1/4 right-1/4 w-96 h-96 bg-green-500/45 dark:bg-orange-500/15 rounded-full blur-[100px]  -z-10"
-      />
+      <div className="fixed top-1/4 left-1/4 w-72 h-72 bg-blue-500/50 dark:bg-red-500/20 rounded-full blur-[100px]  -z-10" />
+      <div className="fixed bottom-1/4 right-1/4 w-96 h-96 bg-green-500/45 dark:bg-orange-500/15 rounded-full blur-[100px]  -z-10" />
 
       {/* Bottom Scroll Fade */}
       <div className="hidden lg:flex fixed bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background via-background/80 to-transparent pointer-events-none z-40">
@@ -105,30 +117,35 @@ const Port: React.FC = () => {
 
       {/* Navigation */}
       <nav
-        className={`fixed top-0 w-full z-50 transition-all duration-500 ${isScrolled
-          ? "bg-black/30 backdrop-blur-md py-4 border-b border-white/5"
-          : "py-8 bg-transparent"
-          }`}
+        className={`fixed top-0 w-full z-50 transition-all duration-500 ${
+          isScrolled
+            ? "bg-black/30 backdrop-blur-md py-4 border-b border-white/5"
+            : "py-8 bg-transparent"
+        }`}
       >
         <div className="max-w-6xl mx-auto px-6 flex justify-between items-center">
           <button
             onClick={() => scrollToSection("home")}
             className="group z-50 flex items-center gap-1"
           >
-            <span className="font-mono text-sm tracking-widest text-gray-700 dark:text-gray-400 hover:text-neutral-900 dark:hover:text-white transition-colors">MOAMIN</span>
+            <span className="font-mono text-sm tracking-widest text-gray-700 dark:text-gray-400 hover:text-neutral-900 dark:hover:text-white transition-colors">
+              MOAMIN
+            </span>
           </button>
 
           {/* Desktop Nav - Theme Toggle Only */}
           <div className="flex items-center">
             <button
-              onClick={() => mounted && setTheme(theme === 'dark' ? 'light' : 'dark')}
+              onClick={() =>
+                mounted && setTheme(theme === "dark" ? "light" : "dark")
+              }
               className="p-2 rounded-lg border border-transparent hover:border-neutral-400 dark:hover:border-neutral-600 hover:bg-white/5 dark:hover:bg-white/10 transition-all duration-300"
               aria-label="Toggle theme"
               suppressHydrationWarning
             >
               {!mounted ? (
                 <div className="w-5 h-5" />
-              ) : theme === 'dark' ? (
+              ) : theme === "dark" ? (
                 <Sun size={20} className="text-gray-300" />
               ) : (
                 <Moon size={20} className="text-gray-700" />
@@ -162,20 +179,38 @@ const Port: React.FC = () => {
                   PORTFOLIO / 2025
                 </span>
                 <div className="flex flex-col py-2 lg:py-8">
-                  <span className="font-playfair font-extralight tracking-tighter text-5xl md:text-8xl text-neutral-900 dark:text-white">MO AMIN</span>
+                  <span className="font-playfair font-extralight tracking-tighter text-5xl md:text-8xl text-neutral-900 dark:text-white">
+                    MO AMIN
+                  </span>
                   <span className="text-2xl md:text-4xl font-extralight text-gray-700 dark:text-gray-400">
                     FULLSTACK ENGINEER
                   </span>
                 </div>
               </div>
               <p className="max-w-xl font-extralight tracking-normal text-neutral-700 dark:text-neutral-400 text-lg md:text-xl lg:text-2xl leading-relaxed pt-4">
-                I'm a software engineer specializing in building <span className="text-neutral-900 dark:text-foreground">robust</span> and{" "}
-                <span className="text-neutral-900 dark:text-foreground">scalable</span> web pages. I also dabble in photography.
+                I'm a software engineer specializing in building{" "}
+                <span className="text-neutral-900 dark:text-foreground">
+                  robust
+                </span>{" "}
+                and{" "}
+                <span className="text-neutral-900 dark:text-foreground">
+                  scalable
+                </span>{" "}
+                web pages. I also dabble in photography.
                 {/* This year, I'm focused on expanding my portfolio with accessible, human-centered products. */}
               </p>
               <div className="pt-8 flex items-center gap-2">
                 <span className="inline-block w-1.5 h-1.5 rounded-full bg-green-600 animate-pulse"></span>
-                <span className="text-xs md:text-sm lg:text-md font-mono tracking-widest text-gray-600 dark:text-gray-500">AVAILABLE FOR WORK / <a className="hover:underline hover:text-white" download href="./Mohammed Amin Res.pdf">RESUME</a></span>
+                <span className="text-xs md:text-sm lg:text-md font-mono tracking-widest text-gray-600 dark:text-gray-500">
+                  AVAILABLE FOR WORK /{" "}
+                  <a
+                    className="hover:underline hover:text-black hover:dark:text-white"
+                    download
+                    href="./Mohammed Amin Res.pdf"
+                  >
+                    RESUME
+                  </a>
+                </span>
               </div>
             </div>
 
@@ -204,8 +239,12 @@ const Port: React.FC = () => {
           <div className="relative z-10">
             <div className="flex flex-col gap-4 mb-12">
               <div className="space-y-2">
-                <div className="text-sm font-mono text-gray-600 dark:text-gray-500">01 - ABOUT</div>
-                <h2 className="text-3xl sm:text-4xl font-playfair font-light text-neutral-900 dark:text-white">ABOUT ME</h2>
+                <div className="text-sm font-mono text-gray-600 dark:text-gray-500">
+                  01 - ABOUT
+                </div>
+                <h2 className="text-3xl sm:text-4xl font-playfair font-light text-neutral-900 dark:text-white">
+                  ABOUT ME
+                </h2>
               </div>
             </div>
 
@@ -213,11 +252,14 @@ const Port: React.FC = () => {
               {/* Text Content - Top */}
               <div className="space-y-6 font-extralight tracking-normal text-neutral-700 dark:text-neutral-400 text-lg md:text-xl lg:text-2xl leading-relaxed">
                 <p>
-                  With over <span className="text-neutral-900 dark:text-foreground">5 years</span> of
-                  experience, I've
-                  worked on everything from complex distributed microservices to
-                  monolithic SPAs. This diverse background has given me a
-                  versatile skill set that adapts to any environment.
+                  With over{" "}
+                  <span className="text-neutral-900 dark:text-foreground">
+                    5 years
+                  </span>{" "}
+                  of experience, I've worked on everything from complex
+                  distributed microservices to monolithic SPAs. This diverse
+                  background has given me a versatile skill set that adapts to
+                  any environment.
                 </p>
                 <p>
                   I also consider myself a creative person, so I channel that
@@ -276,7 +318,6 @@ const Port: React.FC = () => {
                   ))}
                 </div>
               </div>
-
             </div>
           </div>
         </section>
@@ -286,14 +327,23 @@ const Port: React.FC = () => {
           <div className="space-y-12 sm:space-y-16">
             <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
               <div className="space-y-2">
-                <div className="text-sm font-mono text-gray-600 dark:text-gray-500">02 - EXPERIENCE</div>
-                <h2 className="text-3xl sm:text-4xl font-playfair font-light text-neutral-900 dark:text-white">SELECTED WORK</h2>
+                <div className="text-sm font-mono text-gray-600 dark:text-gray-500">
+                  02 - EXPERIENCE
+                </div>
+                <h2 className="text-3xl sm:text-4xl font-playfair font-light text-neutral-900 dark:text-white">
+                  SELECTED WORK
+                </h2>
               </div>
-              <div className="hidden lg:block text-sm text-muted-foreground font-mono">2021 — 2025</div>
+              <div className="hidden lg:block text-sm text-muted-foreground font-mono">
+                2021 — 2025
+              </div>
             </div>
             <div className="space-y-8 sm:space-y-12">
               {jobs.map((job: Job, idx: number) => (
-                <div key={idx} className="group grid lg:grid-cols-12 gap-4 sm:gap-8 py-6 sm:py-8 border-b border-gray-400/60 dark:border-border/50 hover:border-gray-600 dark:hover:border-border transition-colors duration-500">
+                <div
+                  key={idx}
+                  className="group grid lg:grid-cols-12 gap-4 sm:gap-8 py-6 sm:py-8 border-b border-gray-400/60 dark:border-border/50 hover:border-gray-600 dark:hover:border-border transition-colors duration-500"
+                >
                   <div className="lg:col-span-2">
                     <div className="text-xl sm:text-2xl font-light text-muted-foreground group-hover:text-foreground transition-colors duration-500">
                       {job.range}
@@ -301,8 +351,12 @@ const Port: React.FC = () => {
                   </div>
                   <div className="lg:col-span-6 space-y-3">
                     <div className="leading-6">
-                      <h3 className="text-2xl md:text-3xl font-extralight text-foreground">{job.title}</h3>
-                      <div className="font-light text-xl md:text-2xl text-muted-foreground">{job.company}</div>
+                      <h3 className="text-2xl md:text-3xl font-extralight text-foreground">
+                        {job.title}
+                      </h3>
+                      <div className="font-light text-xl md:text-2xl text-muted-foreground">
+                        {job.company}
+                      </div>
                     </div>
                     <p className="text-muted-foreground text-lato font-extralight tracking-normal leading-relaxed text-lg md:text-xl lg:text-2xl lg:max-w-xl">
                       {job.duties[0]}
@@ -329,14 +383,20 @@ const Port: React.FC = () => {
           <div className="relative z-10">
             <div className="flex flex-col gap-4 mb-12">
               <div className="space-y-2">
-                <div className="text-sm font-mono text-gray-600 dark:text-gray-500">03 - PHOTOGRAPHY</div>
-                <h2 className="text-3xl sm:text-4xl font-playfair font-light text-neutral-900 dark:text-white">VISUAL STORIES</h2>
+                <div className="text-sm font-mono text-gray-600 dark:text-gray-500">
+                  03 - PHOTOGRAPHY
+                </div>
+                <h2 className="text-3xl sm:text-4xl font-playfair font-light text-neutral-900 dark:text-white">
+                  VISUAL STORIES
+                </h2>
               </div>
             </div>
 
             <div className="mb-12">
               <p className="text-neutral-700 dark:text-neutral-400 text-lg md:text-xl lg:text-2xl font-extralight tracking-normal">
-                Capturing moments through my lens — a collection of architecture, nature, and portraits. Currently shooting on a Sony A7III.
+                Capturing moments through my lens — a collection of
+                architecture, nature, and portraits. Currently shooting on a
+                Sony A7III.
               </p>
             </div>
 
@@ -355,7 +415,9 @@ const Port: React.FC = () => {
                   loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
-                  <span className="text-white text-sm font-mono tracking-widest">{photos[0].category}</span>
+                  <span className="text-white text-sm font-mono tracking-widest">
+                    {photos[0].category}
+                  </span>
                 </div>
               </div>
 
@@ -372,7 +434,9 @@ const Port: React.FC = () => {
                   loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
-                  <span className="text-white text-sm font-mono tracking-widest">{photos[1].category}</span>
+                  <span className="text-white text-sm font-mono tracking-widest">
+                    {photos[1].category}
+                  </span>
                 </div>
               </div>
 
@@ -389,7 +453,9 @@ const Port: React.FC = () => {
                   loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-4">
-                  <span className="text-white text-xs font-mono tracking-widest">{photos[2].category}</span>
+                  <span className="text-white text-xs font-mono tracking-widest">
+                    {photos[2].category}
+                  </span>
                 </div>
               </div>
 
@@ -406,7 +472,9 @@ const Port: React.FC = () => {
                   loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-4">
-                  <span className="text-white text-xs font-mono tracking-widest">{photos[3].category}</span>
+                  <span className="text-white text-xs font-mono tracking-widest">
+                    {photos[3].category}
+                  </span>
                 </div>
               </div>
 
@@ -423,7 +491,9 @@ const Port: React.FC = () => {
                   loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-4">
-                  <span className="text-white text-xs font-mono tracking-widest">{photos[4].category}</span>
+                  <span className="text-white text-xs font-mono tracking-widest">
+                    {photos[4].category}
+                  </span>
                 </div>
               </div>
             </div>
@@ -431,15 +501,16 @@ const Port: React.FC = () => {
         </section>
 
         {/* Contact Section */}
-        <section
-          id="contact"
-          className="py-24 md:py-32 relative text-center"
-        >
+        <section id="contact" className="py-24 md:py-32 relative text-center">
           <div className="relative z-10">
             <div className="flex flex-col gap-4 mb-12">
               <div className="space-y-2">
-                <div className="text-sm font-mono text-gray-600 dark:text-gray-500">04 - CONTACT</div>
-                <h2 className="text-3xl sm:text-4xl font-playfair font-light text-neutral-900 dark:text-white">GET IN TOUCH</h2>
+                <div className="text-sm font-mono text-gray-600 dark:text-gray-500">
+                  04 - CONTACT
+                </div>
+                <h2 className="text-3xl sm:text-4xl font-playfair font-light text-neutral-900 dark:text-white">
+                  GET IN TOUCH
+                </h2>
               </div>
             </div>
 
