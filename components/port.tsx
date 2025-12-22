@@ -175,7 +175,7 @@ const Port: React.FC = () => {
               </p>
               <div className="pt-8 flex items-center gap-2">
                 <span className="inline-block w-1.5 h-1.5 rounded-full bg-green-600 animate-pulse"></span>
-                <span className="text-xs md:text-sm lg:text-md font-mono tracking-widest text-gray-600 dark:text-gray-500">AVAILABLE FOR WORK / NEW YORK</span>
+                <span className="text-xs md:text-sm lg:text-md font-mono tracking-widest text-gray-600 dark:text-gray-500">AVAILABLE FOR WORK / <a className="hover:underline hover:text-white" download href="./Mohammed Amin Res.pdf">RESUME</a></span>
               </div>
             </div>
 
@@ -237,9 +237,9 @@ const Port: React.FC = () => {
                 </p> */}
               </div>
 
-              <Suspense fallback={<div className="h-20" />}>
+              {/* <Suspense fallback={<div className="h-20" />}>
                 <TechStack />
-              </Suspense>
+              </Suspense> */}
 
               {/* Notable Achievements */}
               <div className="space-y-6 mt-16">
