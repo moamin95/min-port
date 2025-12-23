@@ -206,7 +206,7 @@ const Port: React.FC = () => {
                   <a
                     className="hover:underline hover:text-black hover:dark:text-white"
                     download
-                    href="./Mohammed Amin Res.pdf"
+                    href="./Mohammed Amin.pdf"
                   >
                     RESUME
                   </a>

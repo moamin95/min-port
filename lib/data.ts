@@ -152,7 +152,7 @@ export const achievements: Achievement[] = [
   {
     title: "React Server Components",
     company: "American Express",
-    description: "Refactored legacy React components to Version 19, implementing React Server Components (RSC) and Server Actions. Optimized performance and security by offloading data fetching and sensitive form logic to the server, significantly reducing client-side JavaScript bundles.",
+    description: "Spearheading the migration of legacy architectures to React 19 and Node.js, implementing TanStack Query to architect a robust caching strategy that optimizes data-fetching performance and significantly reduces redundant API overhead.",
     year: "2025"
   },
   {
