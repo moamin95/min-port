@@ -168,3 +168,8 @@ export const achievements: Achievement[] = [
     year: "2022"
   },
 ];
+
+export const Projects = [
+
+  {name: 'UrbanJobs', link: 'https://urbanjobs.vercel.app/', blurb: 'A real-time NYC job board using React and Express, integrating NYC Open Data APIs via SODA v3 to provide users with up-to-date career opportunities. Managed the end-to-end CI/CD pipeline using Vercel and Render.'}
+]

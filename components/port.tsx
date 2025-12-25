@@ -8,6 +8,7 @@ import {
   jobs,
   photos,
   achievements,
+  Projects,
   type PhotoMetadata,
   type Job,
   type Achievement,
@@ -378,13 +379,56 @@ const Port: React.FC = () => {
           </div>
         </section>
 
+        {/* Projects Section */}
+        <section id="projects" className="py-24 md:py-32 relative">
+          <div className="relative z-10">
+            <div className="flex flex-col gap-4 mb-12">
+              <div className="space-y-2">
+                <div className="text-sm font-mono text-gray-600 dark:text-gray-500">
+                  03 - PROJECTS
+                </div>
+                <h2 className="text-3xl sm:text-4xl font-playfair font-light text-neutral-900 dark:text-white">
+                  SIDE PROJECTS
+                </h2>
+              </div>
+            </div>
+
+            <div className="space-y-8">
+              {Projects.map((project, idx: number) => (
+                <div
+                  key={idx}
+                  className="group border-l-2 border-neutral-300 dark:border-neutral-700 hover:border-neutral-500 dark:hover:border-neutral-500 pl-6 py-4 transition-colors duration-300"
+                >
+                  <div className="space-y-3">
+                    <div className="flex items-baseline gap-3">
+                      <h3 className="text-2xl md:text-3xl font-light text-neutral-900 dark:text-white">
+                        {project.name}
+                      </h3>
+                      <Link
+                        href={project.link}
+                        target="_blank"
+                        className="text-sm font-mono text-muted-foreground hover:text-foreground transition-colors"
+                      >
+                        ↗
+                      </Link>
+                    </div>
+                    <p className="text-neutral-700 dark:text-neutral-400 font-extralight tracking-normal leading-relaxed text-lg md:text-xl lg:text-2xl max-w-4xl">
+                      {project.blurb}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* Photography Section */}
         <section id="photography" className="py-24 md:py-32 relative">
           <div className="relative z-10">
             <div className="flex flex-col gap-4 mb-12">
               <div className="space-y-2">
                 <div className="text-sm font-mono text-gray-600 dark:text-gray-500">
-                  03 - PHOTOGRAPHY
+                  04 - PHOTOGRAPHY
                 </div>
                 <h2 className="text-3xl sm:text-4xl font-playfair font-light text-neutral-900 dark:text-white">
                   VISUAL STORIES
@@ -506,7 +550,7 @@ const Port: React.FC = () => {
             <div className="flex flex-col gap-4 mb-12">
               <div className="space-y-2">
                 <div className="text-sm font-mono text-gray-600 dark:text-gray-500">
-                  04 - CONTACT
+                  05 - CONTACT
                 </div>
                 <h2 className="text-3xl sm:text-4xl font-playfair font-light text-neutral-900 dark:text-white">
                   GET IN TOUCH
