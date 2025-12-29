@@ -540,6 +540,25 @@ const Port: React.FC = () => {
                   </span>
                 </div>
               </div>
+
+              {/* Building - medium */}
+              <div
+                onClick={() => setSelectedPhoto(photos[5])}
+                className="col-span-1 row-span-1 relative group overflow-hidden rounded-lg cursor-pointer"
+              >
+                <Image
+                  src={photos[5].src}
+                  alt={photos[5].alt}
+                  fill
+                  className="object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-4">
+                  <span className="text-white text-xs font-mono tracking-widest">
+                    {photos[5].category}
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
         </section>

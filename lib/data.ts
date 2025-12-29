@@ -133,6 +133,16 @@ export const photos: PhotoMetadata[] = [
     camera: "Sony A7III",
     orientation: "portrait"
   },
+  {
+    src: "/images/building.jpg",
+    alt: "Building architecture",
+    category: "ARCHITECTURE",
+    year: "2025",
+    aperture: "f/2.8",
+    focalLength: "35mm",
+    camera: "Sony A7III",
+    orientation: "portrait"
+  },
 ];
 
 export const technologies = [
