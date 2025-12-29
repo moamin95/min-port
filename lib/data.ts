@@ -160,9 +160,9 @@ export const technologies = [
 
 export const achievements: Achievement[] = [
   {
-    title: "React Server Components",
+    title: "React Performant Components",
     company: "American Express",
-    description: "Spearheading the migration of legacy architectures to React 19 and Node.js, implementing TanStack Query to architect a robust caching strategy that optimizes data-fetching performance and significantly reduces redundant API overhead.",
+    description: "Spearheading the migration of legacy architectures to modern React and Node.js, implementing TanStack Query to architect a robust caching strategy that optimizes data-fetching performance and significantly reduces redundant API overhead.",
     year: "2025"
   },
   {
