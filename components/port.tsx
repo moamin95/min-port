@@ -257,14 +257,15 @@ const Port: React.FC = () => {
                   <span className="text-neutral-900 dark:text-foreground">
                     5 years
                   </span>{" "}
-                  of experience, I've worked on everything from complex
-                  distributed microservices to monolithic SPAs. This diverse
+                  of experience, I've worked in several domains ranging from enterprise banking corporations to high velocity SaaS startups. This diverse
                   background has given me a versatile skill set that adapts to
                   any environment.
                 </p>
+
+                <p>Currently, I'm working at <a  className="text-neutral-900 dark:text-foreground hover:underline" href="https://www.federato.ai/">Federato.ai</a>, the only AI-native insurance platform that changes the way insurance gets done.</p>
                 <p>
                   I also consider myself a creative person, so I channel that
-                  energy into photography, content creation, and code.
+                  energy into photography and content creation.
                 </p>
 
                 {/* <p>
@@ -336,7 +337,7 @@ const Port: React.FC = () => {
                 </h2>
               </div>
               <div className="hidden lg:block text-sm text-muted-foreground font-mono">
-                2021 — 2025
+                2021 — 2026
               </div>
             </div>
             <div className="space-y-8 sm:space-y-12">

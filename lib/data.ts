@@ -39,10 +39,12 @@ export interface Achievement {
 }
 
 export const jobs: Job[] = [
+{title: "Senior Software Engineer", company: "Federato", range: "2026 - ", duties: ["Spearheading technical initiatives which enable AI-Native underwriting on a SaaS platform"], tech: ["React", "Nest JS", "Django", "GC", "K8s"]},
+
   {
     title: "Software Engineer",
     company: "American Express",
-    range: "2024 - Present",
+    range: "2024 - 2026",
     duties: [
       "Develop React-based micro-frontend modules using a proprietary Node.Js orchestration framework.",
     ],
@@ -159,6 +161,14 @@ export const technologies = [
 ];
 
 export const achievements: Achievement[] = [
+{
+
+  title: "AI-Native Insurance Underwriting",
+  company: "Federato",
+  description: "Delivering impactful work for an industry changing revamp initiative that changes policy underwriting in the insurance world. Implementing AI integrations into a full underwriting platform, which enables insurance personel to navigate the full policy life cycle seamlessly.",
+  year: "2026"
+},
+
   {
     title: "React Performant Components",
     company: "American Express",
